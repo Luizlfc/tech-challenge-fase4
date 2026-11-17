@@ -1,8 +1,8 @@
 # Roteiro do vídeo — método STAR (≤ 5 minutos)
 
 **Antes de gravar:**
-1. Rode `python run_pipeline.py` para que todos os relatórios estejam atualizados.
-2. Deixe abertos: o VS Code com o terminal, `reports/dashboard.html`, `reports/evidently/drift_report_2026-10.html` e o MLflow (`mlflow ui --backend-store-uri sqlite:///mlflow.db`, em http://127.0.0.1:5000).
+1. Rode `python main.py` para que todos os relatórios estejam atualizados.
+2. Deixe abertos: o VS Code com o terminal, `reports/dashboard.html`, `reports/evidently/drift_report_2026-10.html` e o MLflow: local (`mlflow ui --backend-store-uri sqlite:///mlruns/mlflow.db`, em http://127.0.0.1:5000) ou, se usar o Azure, o workspace em https://ml.azure.com → Jobs.
 3. Grave a tela em 1080p (OBS ou Xbox Game Bar com Win+Alt+R).
 
 ---
@@ -33,8 +33,8 @@ python -m src.validate "data/production/2026-08_sistema_legado.csv"
 > "Treinamos um XGBoost só com o dataset de referência: 18 mil clientes, AUC de 0,78. Os outros 12 mil viraram seis meses de produção. Em cada mês aumentamos a inflação nas faturas, reduzimos os pagamentos e trouxemos um novo perfil jovem com limite baixo. Isso é **data drift**. Também fizemos clientes com alta utilização do limite inadimplirem mais, mesmo com bom histórico. Isso é **concept drift**."
 
 **3. Detecção e observabilidade (2:30 – 3:15)**
-**Tela:** relatório Evidently de 2026-10 (rolar a tabela de drift) e depois o MLflow (run `monitoramento-producao` → gráficos de métricas por step).
-> "Cada lote passa por PSI e Kolmogorov-Smirnov, e o Evidently gera um relatório HTML. Tudo é registrado em logs estruturados e no MLflow: status de cada etapa, latência, volume, PSI por variável e AUC ao longo do tempo. Também exportamos métricas no formato Prometheus."
+**Tela:** relatório Evidently de 2026-10 (rolar a tabela de drift) e depois o MLflow, local ou no Azure ML Studio (run `monitoramento-producao` → aba de métricas: `auc`, `psi_age`, `alerts_total` por step; runs filhos `lote-AAAA-MM` com o HTML do Evidently como artefato).
+> "Cada lote passa por PSI e Kolmogorov-Smirnov, e o Evidently gera um relatório HTML. Tudo é registrado em logs estruturados e no MLflow, que pode rodar local ou no Azure ML como servidor de tracking: status de cada etapa, latência, volume, violações por regra, PSI e KS por variável e AUC ao longo do tempo. Também exportamos métricas no formato Prometheus."
 
 ## R — Result (3:15 – 5:00)
 

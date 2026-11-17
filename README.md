@@ -13,7 +13,8 @@ Uma fintech tem um modelo de Credit Scoring em produção e suspeita de **degrad
 | Dashboard de observabilidade, logs, MLflow e Prometheus | [reports/dashboard.html](reports/dashboard.html), [reports/logs/](reports/logs/), [reports/metrics.prom](reports/metrics.prom) |
 | Análise causal + prescrição | [src/causal_analysis.py](src/causal_analysis.py), [reports/causal_analysis.json](reports/causal_analysis.json) |
 | Governança e LGPD | [seção 7 deste README](#7-governança-e-lgpd-etapa-4) |
-| Vídeo STAR | [seção 9](#9-vídeo-star) · roteiro em [docs/roteiro_video_star.md](docs/roteiro_video_star.md) |
+| Vídeo STAR | [seção 9](#9-vídeo-star) · roteiro em [docs/roteiro_video.md](docs/roteiro_video.md) |
+| Tracking no Azure ML (opcional) | [src/tracking.py](src/tracking.py), [docs/azure_setup.md](docs/azure_setup.md) |
 
 ---
 
@@ -35,9 +36,18 @@ flowchart LR
     SC --> PF[Desempenho com<br/>rótulos defasados<br/>+ viés]
     D --> AL[Regras de alerta]
     PF --> AL
-    AL --> O[Observabilidade<br/>logs JSONL · MLflow<br/>Prometheus · Dashboard]
+    AL --> O[Observabilidade<br/>logs JSONL · Prometheus<br/>Dashboard HTML]
     O --> CA[Análise causal<br/>+ retreino challenger]
+    T -. métricas, modelo .-> ML
+    AL -. métricas por lote,<br/>Evidently HTML .-> ML
+    subgraph ML [MLflow tracking — MLFLOW_TRACKING_URI]
+      direction TB
+      L[(local: ./mlruns<br/>padrão, offline)]
+      AZ[(Azure ML workspace<br/>azureml://... opcional)]
+    end
 ```
+
+O código **sempre roda localmente**. Só o *destino* do tracking muda: com `MLFLOW_TRACKING_URI` definida (no ambiente ou no `.env`), runs, métricas e artefatos vão para o workspace do Azure ML. Sem a variável, ficam em `./mlruns`. Nenhum Compute, Cluster ou Endpoint é criado no Azure.
 
 **Separação Referência x Produção** (boa prática obrigatória): o dataset é dividido **uma única vez**, de forma estratificada, em
 - **Referência (60%, 18.000 linhas):** único dado usado para treinar, validar e escolher o limiar do modelo (70/15/15). O holdout de 15% (2.700 linhas, nunca visto no treino) é a referência de comparação do monitoramento, o que evita métricas otimistas.
@@ -45,29 +55,52 @@ flowchart LR
 
 ## 2. Como executar
 
+### Local (padrão, 100% offline)
+
 ```bash
 python -m venv .venv
 .venv\Scripts\activate            # Linux/Mac: source .venv/bin/activate
 pip install -r requirements.txt
 
-python run_pipeline.py            # pipeline completo (~1 min): baixa os dados, treina, simula, monitora
-pytest -q                         # 16 testes: regras do contrato + PSI/KS
-mlflow ui --backend-store-uri sqlite:///mlflow.db   # http://127.0.0.1:5000
-```
-
-Para demonstrar só o contrato bloqueando um lote (útil no vídeo):
-
-```bash
-python -m src.validate "data/production/2026-08_sistema_legado.csv"   # sai com código 1 e lista as violações
-python -m src.validate "data/production/2026-05.csv"                  # OK
+python main.py                    # comando único (~1 min): baixa os dados, treina, simula, monitora, gera relatórios
+pytest -q                         # 20 testes: regras do contrato, PSI/KS, tracking URI
+mlflow ui --backend-store-uri sqlite:///mlruns/mlflow.db   # http://127.0.0.1:5000
 ```
 
 Depois de rodar, abra **`reports/dashboard.html`** no navegador. Os relatórios Evidently de cada lote ficam em `reports/evidently/`.
 
+Para demonstrar só o contrato bloqueando um lote (útil no vídeo):
+
+```bash
+python -m src.validate "data/production/2026-08_sistema_legado.csv"   # código de saída 1, lista as violações por regra
+python -m src.validate "data/production/2026-05.csv"                  # OK
 ```
-├── run_pipeline.py            # orquestrador ponta a ponta
+
+### Azure ML como servidor de tracking (opcional)
+
+```bash
+pip install -r requirements.txt -r requirements-azure.txt
+az login                                   # autenticação via DefaultAzureCredential
+copy .env.example .env                     # preencha AZURE_* e MLFLOW_TRACKING_URI (azureml://...)
+python -m src.tracking                     # confere o destino: "azureml: azureml://..."
+python main.py                             # mesmo comando; o tracking vai para o workspace
+```
+
+Criação do workspace, orçamento com alerta e remoção de tudo: **[docs/azure_setup.md](docs/azure_setup.md)**. O `.env` está no `.gitignore` e nunca deve ser versionado.
+
+| | Local | Azure ML |
+|---|---|---|
+| Onde o código roda | sua máquina | sua máquina |
+| Tracking | `sqlite:///mlruns/mlflow.db` + `mlruns/artifacts` | workspace (`azureml://...`) |
+| Visualização | `mlflow ui` | ml.azure.com → Jobs / Models |
+| Dependências extras | — | `requirements-azure.txt` |
+| Dados de clientes | local | **continuam locais**; só métricas e relatórios agregados sobem |
+
+```
+├── main.py                    # comando único: pipeline ponta a ponta
 ├── src/
 │   ├── config.py              # caminhos, features, limiares de alerta
+│   ├── tracking.py            # MLflow: MLFLOW_TRACKING_URI (Azure ML) ou ./mlruns
 │   ├── data_prep.py           # download, pseudonimização, split referência/produção
 │   ├── contracts.py           # contrato de dados (Pandera) — 9 regras rígidas
 │   ├── validate.py            # validação, bloqueio e quarentena
@@ -80,7 +113,11 @@ Depois de rodar, abra **`reports/dashboard.html`** no navegador. Os relatórios 
 │   └── logging_utils.py       # logs estruturados JSONL e alertas
 ├── tests/                     # pytest
 ├── reports/                   # evidências geradas (versionadas)
-└── docs/roteiro_video_star.md
+├── docs/azure_setup.md        # comandos az CLI (workspace, budget, remoção)
+├── docs/roteiro_video.md      # roteiro STAR
+├── .env.example               # variáveis do Azure (copiar para .env)
+├── requirements.txt           # execução local
+└── requirements-azure.txt     # opcional: tracking no Azure ML
 ```
 
 **Dataset:** [UCI Default of Credit Card Clients](https://archive.ics.uci.edu/dataset/350) (30.000 clientes, classificação binária de inadimplência, licença CC BY 4.0). Ele atende ao mínimo de 5.000 amostras e é baixado automaticamente, sem necessidade de login. Para o exercício, tratamos os registros como se fossem clientes brasileiros da fintech.
@@ -188,9 +225,23 @@ A inadimplência quase **dobra** (22% → 42%) enquanto a taxa de aprovação ca
 Três camadas complementares recebem os mesmos eventos:
 
 1. **Logs estruturados centralizados** (JSON Lines): `logs/pipeline.jsonl` guarda cada etapa de cada lote (status, latência, volume) e `logs/alerts.jsonl` guarda os alertas. Uma cópia fica versionada em [reports/logs/](reports/logs/). Os logs **nunca contêm dados pessoais**, apenas contagens, métricas e nomes de lote.
-2. **MLflow** (`sqlite:///mlflow.db`):
+2. **MLflow** (local em `./mlruns` ou Azure ML, via `MLFLOW_TRACKING_URI`; ver [seção 2](#2-como-executar)):
    - experimento `credit-scoring-training`: parâmetros, métricas, modelo registrado e model card;
-   - experimento `credit-scoring-monitoring`: um run pai com **séries temporais por lote** (gráficos de AUC, PSI e drift share por step) e um run filho por lote, com o HTML do Evidently, a tabela de drift ou as violações do contrato como artefatos.
+   - experimento `credit-scoring-monitoring`: um run pai com **séries temporais por lote** (gráficos de AUC, PSI e drift share por step) e um run filho por lote, com o HTML do Evidently, a tabela de drift ou as violações do contrato como artefatos. Ao final, o dashboard, os logs, o resumo e a análise causal são anexados ao run pai.
+
+   O que é registrado em **cada execução** de `python main.py`:
+
+   | Grupo | Métricas / artefatos no MLflow |
+   |---|---|
+   | Modelo (treino) | parâmetros do XGBoost, limiar; `holdout_auc`, `holdout_f1`, `holdout_precision`, `holdout_recall`, `holdout_ks_score`, `holdout_gini`; impacto desproporcional; modelo registrado `credit-scoring-xgb` |
+   | Validação | `validation_passed` (1/0), `contract_violations_total`, `contract_R1_cases` … `contract_R9_cases` (casos por regra); também para o dataset de referência (`reference_contract_*`) |
+   | Drift por feature | `psi_<feature>`, `ks_stat_<feature>`, `ks_pvalue_<feature>`, `drift_flag_<feature>` (22 variáveis), `drift_share`, `n_drifted_features`, `max_psi`, `evidently_drifted_columns` |
+   | Modelo em produção | `auc`, `f1`, `precision`, `recall`, `ks_score`, `approval_rate`, `default_rate_observed` |
+   | Alertas | `alerts_total`, `alerts_critical`, `alerts_drift`, `alerts_contract`, `alerts_other`; agregados `run_alerts_*` |
+   | Pipeline | `pipeline_success`, `rows_received`, `rows_scored`, `throughput_rows_s`, `latency_total_s`, `latency_<etapa>_s` |
+   | Artefatos | `evidently/drift_report_<lote>.html`, `feature_drift.json`, `predictions_summary.json`, `contract_violations.json`, `reports/dashboard.html`, `logs/*.jsonl` |
+
+   As predições individuais de cada lote ficam em `data/predictions/<lote>.csv` (com `client_hash`, score e decisão). Esse arquivo é local e nunca é versionado nem enviado à nuvem; para o MLflow vai apenas um resumo (taxa de aprovação e quantis do score).
 3. **Dashboard HTML autocontido** ([reports/dashboard.html](reports/dashboard.html)) com KPIs, AUC no tempo, inadimplência × aprovação, heatmap de PSI por variável e mês, saúde do pipeline por etapa, violações do contrato, lista de alertas e análise causal. Há também uma exportação no formato **Prometheus** ([reports/metrics.prom](reports/metrics.prom)), pronta para o *textfile collector* do node_exporter (integração com a Fase 3).
 
 ### Métricas de saúde documentadas
@@ -352,7 +403,7 @@ Nenhum **dado pessoal sensível** (art. 5º, II: origem racial, saúde, biometri
 
 🎥 **Link do vídeo:** _adicionar aqui após a gravação_
 
-Roteiro de 5 minutos (Situation, Task, Action, Result) com falas e o que mostrar na tela: [docs/roteiro_video_star.md](docs/roteiro_video_star.md).
+Roteiro de 5 minutos (Situation, Task, Action, Result) com falas e o que mostrar na tela: [docs/roteiro_video.md](docs/roteiro_video.md).
 
 ## 10. Limitações
 
