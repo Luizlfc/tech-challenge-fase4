@@ -335,7 +335,7 @@ O pior efeito de negócio vem do concept drift: clientes aprovados que não paga
 </div>
 
 <footer>Relatórios Evidently por lote em <code>reports/evidently/</code> · rastreamento completo no MLflow
-(<code>mlflow ui --backend-store-uri sqlite:///mlflow.db</code>) · dados pseudonimizados, nenhum dado pessoal neste painel.</footer>
+(<code>mlflow ui --backend-store-uri sqlite:///mlruns/mlflow.db</code>) · dados pseudonimizados, nenhum dado pessoal neste painel.</footer>
 </main></body></html>"""
 
 
