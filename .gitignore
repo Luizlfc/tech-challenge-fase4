@@ -1,0 +1,24 @@
+# Ambiente
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Dados (baixados/gerados pelo pipeline - nunca versionar dados pessoais)
+data/raw/
+data/processed/
+data/production/
+data/quarantine/
+
+# Artefatos locais pesados (recriados por `python run_pipeline.py`)
+mlflow.db
+mlruns/
+mlartifacts/
+models/*.json
+models/*.joblib
+
+# Logs brutos (o resumo consolidado vai para reports/)
+logs/
+
+# Segredos
+.env
