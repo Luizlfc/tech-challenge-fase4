@@ -18,9 +18,10 @@ from sklearn.metrics import f1_score
 from sklearn.model_selection import train_test_split
 from xgboost import XGBClassifier
 
-from src.config import (FEATURES, MLFLOW_EXPERIMENT_TRAIN, MLFLOW_TRACKING_URI, MODEL_META_PATH,
-                        MODEL_PATH, MODELS_DIR, REFERENCE_PATH, REPORTS_DIR, SEED, TARGET)
-from src.logging_utils import log_event, timed_stage
+from src import tracking
+from src.config import (FEATURES, MLFLOW_EXPERIMENT_TRAIN, MODEL_META_PATH, MODEL_PATH, MODELS_DIR,
+                        REFERENCE_PATH, REPORTS_DIR, SEED, TARGET)
+from src.logging_utils import RUN_ID, log_event, timed_stage
 from src.metrics import classification_metrics, fairness_report
 from src.validate import validate_batch
 
@@ -52,8 +53,7 @@ def main() -> dict:
 
     train, val, holdout = split_reference(ref)
 
-    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-    mlflow.set_experiment(MLFLOW_EXPERIMENT_TRAIN)
+    uri = tracking.setup(MLFLOW_EXPERIMENT_TRAIN)
     with mlflow.start_run(run_name=f"baseline-xgb-v{MODEL_VERSION}") as run, timed_stage("training") as info:
         model = XGBClassifier(**PARAMS)
         model.fit(train[FEATURES], train[TARGET], eval_set=[(val[FEATURES], val[TARGET])], verbose=False)
@@ -69,10 +69,20 @@ def main() -> dict:
         mlflow.log_metrics({f"holdout_{k}": v for k, v in metrics.items()})
         mlflow.log_metric("holdout_di_sex", fairness["sex"]["disparate_impact"])
         mlflow.log_metric("holdout_di_age", fairness["age_band"]["disparate_impact"])
+        # Resultado do contrato no dataset de referência (pré-condição do treino)
+        mlflow.log_metrics({"reference_validation_passed": int(res.passed), "reference_rows": res.rows,
+                            **{f"reference_contract_{r}_cases": n for r, n in res.cases_by_rule().items()}})
         mlflow.set_tags({"stage": "baseline", "dataset": "UCI default of credit card clients",
-                         "protected_attrs_excluded": "sex,marriage"})
-        mlflow.xgboost.log_model(model, name="model", input_example=holdout[FEATURES].head(3),
-                                 registered_model_name="credit-scoring-xgb")
+                         "protected_attrs_excluded": "sex,marriage", "tracking_backend": tracking.backend_name(uri),
+                         "pipeline_run_id": RUN_ID})
+        try:
+            mlflow.xgboost.log_model(model, name="model", input_example=holdout[FEATURES].head(3),
+                                     registered_model_name="credit-scoring-xgb")
+        except Exception as exc:  # alguns servidores remotos não suportam todas as APIs de modelo do MLflow 3
+            log_event("training", "model_logging_fallback", level="WARNING", error=f"{type(exc).__name__}: {exc}")
+            MODELS_DIR.mkdir(parents=True, exist_ok=True)
+            model.save_model(MODEL_PATH)
+            mlflow.log_artifact(str(MODEL_PATH), "model")
         info.update(rows=len(train), auc=round(metrics["auc"], 4), threshold=threshold)
 
         importances = pd.Series(model.feature_importances_, index=FEATURES).sort_values(ascending=False)

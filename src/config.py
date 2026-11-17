@@ -8,6 +8,7 @@ RAW_DIR = DATA_DIR / "raw"
 PROCESSED_DIR = DATA_DIR / "processed"
 PRODUCTION_DIR = DATA_DIR / "production"
 QUARANTINE_DIR = DATA_DIR / "quarantine"
+PREDICTIONS_DIR = DATA_DIR / "predictions"   # predições por lote (pseudonimizadas, nunca versionadas)
 MODELS_DIR = ROOT / "models"
 REPORTS_DIR = ROOT / "reports"
 LOGS_DIR = ROOT / "logs"
@@ -21,7 +22,7 @@ PRODUCTION_POOL_PATH = PROCESSED_DIR / "production_pool.csv"  # nunca vistos pel
 MODEL_PATH = MODELS_DIR / "model.json"
 MODEL_META_PATH = MODELS_DIR / "model_metadata.json"
 
-MLFLOW_TRACKING_URI = f"sqlite:///{(ROOT / 'mlflow.db').as_posix()}"
+# Tracking URI: resolvida em src/tracking.py (MLFLOW_TRACKING_URI ou ./mlruns local)
 MLFLOW_EXPERIMENT_TRAIN = "credit-scoring-training"
 MLFLOW_EXPERIMENT_MONITOR = "credit-scoring-monitoring"
 
