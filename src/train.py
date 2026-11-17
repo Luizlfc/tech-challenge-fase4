@@ -9,7 +9,9 @@ from __future__ import annotations
 
 import hashlib
 import json
+import tempfile
 from datetime import datetime, timezone
+from pathlib import Path
 
 import mlflow
 import numpy as np
@@ -78,11 +80,22 @@ def main() -> dict:
         try:
             mlflow.xgboost.log_model(model, name="model", input_example=holdout[FEATURES].head(3),
                                      registered_model_name="credit-scoring-xgb")
-        except Exception as exc:  # alguns servidores remotos não suportam todas as APIs de modelo do MLflow 3
+        except Exception as exc:
+            # O Azure ML ainda não implementa a API "logged-models" do MLflow 3. Fallback compatível:
+            # salva no formato MLflow, envia a pasta como artefato e registra via runs:/<id>/model.
             log_event("training", "model_logging_fallback", level="WARNING", error=f"{type(exc).__name__}: {exc}")
-            MODELS_DIR.mkdir(parents=True, exist_ok=True)
-            model.save_model(MODEL_PATH)
-            mlflow.log_artifact(str(MODEL_PATH), "model")
+            with tempfile.TemporaryDirectory() as tmp:
+                local = Path(tmp) / "model"
+                mlflow.xgboost.save_model(model, str(local), input_example=holdout[FEATURES].head(3))
+                mlflow.log_artifacts(str(local), "model")
+            # API clássica do Model Registry (register_model do MLflow 3 também chama logged-models/search)
+            client = mlflow.MlflowClient()
+            try:
+                client.get_registered_model("credit-scoring-xgb")
+            except mlflow.exceptions.MlflowException:
+                client.create_registered_model("credit-scoring-xgb")
+            mv = client.create_model_version("credit-scoring-xgb", f"{run.info.artifact_uri}/model", run.info.run_id)
+            log_event("training", "model_registered_fallback", version=mv.version)
         info.update(rows=len(train), auc=round(metrics["auc"], 4), threshold=threshold)
 
         importances = pd.Series(model.feature_importances_, index=FEATURES).sort_values(ascending=False)

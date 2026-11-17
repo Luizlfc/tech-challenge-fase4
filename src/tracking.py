@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import os
 import sys
+import time
 
 import mlflow
 from dotenv import load_dotenv
@@ -53,7 +54,14 @@ def setup(experiment: str) -> str:
     mlflow.set_tracking_uri(uri)
     if not is_azure(uri) and mlflow.get_experiment_by_name(experiment) is None:
         mlflow.create_experiment(experiment, artifact_location=f"{LOCAL_ARTIFACTS}/{experiment}")
-    mlflow.set_experiment(experiment)
+    for attempt in range(1, 4):  # o servidor remoto ocasionalmente responde 400/5xx transitórios
+        try:
+            mlflow.set_experiment(experiment)
+            break
+        except mlflow.exceptions.MlflowException:
+            if attempt == 3 or not is_azure(uri):
+                raise
+            time.sleep(2 * attempt)
     return uri
 
 
