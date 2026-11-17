@@ -56,3 +56,16 @@ def test_missing_column_blocked():
 
 def test_empty_batch_blocked():
     assert not validate_batch(make_valid().iloc[0:0], "t_empty").passed
+
+
+def test_violations_are_mapped_to_rules():
+    bad = make_valid()
+    bad.loc[0, "age"] = 15                       # R3
+    bad.loc[1, "limit_bal"] = np.nan             # R2
+    bad = pd.concat([bad, bad.iloc[[2]]])        # R1 + R8 (duplicatas)
+    bad["cpf"] = "x"                             # R8 (esquema estrito)
+    res = validate_batch(bad, "t_rules")
+    by_rule = res.cases_by_rule()
+    assert set(by_rule) == {f"R{i}" for i in range(1, 10)}
+    assert by_rule["R1"] > 0 and by_rule["R2"] > 0 and by_rule["R3"] > 0 and by_rule["R8"] > 0
+    assert by_rule["R5"] == 0 and by_rule["R7"] == 0
