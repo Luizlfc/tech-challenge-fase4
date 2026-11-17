@@ -36,12 +36,12 @@
       "batch": "2026-05",
       "step": 0,
       "stages": {
-        "ingestion": 0.023,
-        "validation": 0.081,
-        "scoring": 0.035,
-        "drift_detection": 0.144,
-        "evidently_report": 5.571,
-        "performance_monitoring": 0.039
+        "ingestion": 0.009,
+        "validation": 0.027,
+        "scoring": 0.023,
+        "drift_detection": 0.076,
+        "evidently_report": 2.3,
+        "performance_monitoring": 0.011
       },
       "rows_received": 2000,
       "validation_passed": true,
@@ -299,19 +299,19 @@
       "alerts_by_kind": {},
       "alerts_critical": 0,
       "status": "SAUDÁVEL",
-      "total_latency_s": 5.912,
-      "throughput_rows_s": 57142.9
+      "total_latency_s": 2.452,
+      "throughput_rows_s": 86956.5
     },
     {
       "batch": "2026-06",
       "step": 1,
       "stages": {
-        "ingestion": 0.015,
-        "validation": 0.077,
-        "scoring": 0.044,
-        "drift_detection": 0.246,
-        "evidently_report": 4.723,
-        "performance_monitoring": 0.037
+        "ingestion": 0.006,
+        "validation": 0.017,
+        "scoring": 0.014,
+        "drift_detection": 0.114,
+        "evidently_report": 2.153,
+        "performance_monitoring": 0.01
       },
       "rows_received": 2000,
       "validation_passed": true,
@@ -569,19 +569,19 @@
       "alerts_by_kind": {},
       "alerts_critical": 0,
       "status": "SAUDÁVEL",
-      "total_latency_s": 5.167,
-      "throughput_rows_s": 45454.5
+      "total_latency_s": 2.321,
+      "throughput_rows_s": 142857.1
     },
     {
       "batch": "2026-07",
       "step": 2,
       "stages": {
-        "ingestion": 0.016,
-        "validation": 0.079,
-        "scoring": 0.042,
-        "drift_detection": 0.243,
-        "evidently_report": 5.039,
-        "performance_monitoring": 0.041
+        "ingestion": 0.007,
+        "validation": 0.02,
+        "scoring": 0.012,
+        "drift_detection": 0.128,
+        "evidently_report": 1.605,
+        "performance_monitoring": 0.014
       },
       "rows_received": 2000,
       "validation_passed": true,
@@ -843,19 +843,19 @@
       },
       "alerts_critical": 0,
       "status": "ATENÇÃO",
-      "total_latency_s": 5.486,
-      "throughput_rows_s": 47619.0
+      "total_latency_s": 1.798,
+      "throughput_rows_s": 166666.7
     },
     {
       "batch": "2026-08",
       "step": 3,
       "stages": {
-        "ingestion": 0.018,
-        "validation": 0.065,
-        "scoring": 0.039,
-        "drift_detection": 0.375,
-        "evidently_report": 5.292,
-        "performance_monitoring": 0.035
+        "ingestion": 0.009,
+        "validation": 0.025,
+        "scoring": 0.016,
+        "drift_detection": 0.201,
+        "evidently_report": 2.161,
+        "performance_monitoring": 0.009
       },
       "rows_received": 2000,
       "validation_passed": true,
@@ -1123,15 +1123,15 @@
       },
       "alerts_critical": 2,
       "status": "ALERTA",
-      "total_latency_s": 5.876,
-      "throughput_rows_s": 51282.1
+      "total_latency_s": 2.435,
+      "throughput_rows_s": 125000.0
     },
     {
       "batch": "2026-08_sistema_legado",
       "step": 4,
       "stages": {
-        "ingestion": 0.008,
-        "validation": 0.189
+        "ingestion": 0.004,
+        "validation": 0.057
       },
       "rows_received": 520,
       "validation_passed": false,
@@ -1143,7 +1143,7 @@
         "R5": 5,
         "R6": 10,
         "R7": 0,
-        "R8": 2,
+        "R8": 21,
         "R9": 0
       },
       "status": "BLOQUEADO",
@@ -1166,9 +1166,20 @@
           "check": "field_uniqueness",
           "n_cases": 40,
           "examples": [
-            "7456ad3a8171856d",
-            "a079515e9aa3b0ac",
-            "b4ed918846506862"
+            "6000994baf13638f",
+            "29a15afcbbdde648",
+            "57052d416bc5765c"
+          ]
+        },
+        {
+          "rule": "R8",
+          "column": "CreditContract v1.0",
+          "check": "linhas duplicadas",
+          "n_cases": 20,
+          "examples": [
+            "29a15afcbbdde648",
+            "6000994baf13638f",
+            "94d6b7e072ab6456"
           ]
         },
         {
@@ -1234,15 +1245,6 @@
           "examples": [
             "cpf"
           ]
-        },
-        {
-          "rule": "R8",
-          "column": "CreditContract v1.0",
-          "check": "linhas duplicadas",
-          "n_cases": 1,
-          "examples": [
-            "False"
-          ]
         }
       ],
       "alerts": 1,
@@ -1252,18 +1254,18 @@
       "alerts_by_kind": {
         "DATA_CONTRACT_VIOLATION": 1
       },
-      "total_latency_s": 0.201
+      "total_latency_s": 0.062
     },
     {
       "batch": "2026-09",
       "step": 5,
       "stages": {
-        "ingestion": 0.017,
-        "validation": 0.072,
-        "scoring": 0.041,
-        "drift_detection": 0.416,
-        "evidently_report": 4.814,
-        "performance_monitoring": 0.033
+        "ingestion": 0.007,
+        "validation": 0.016,
+        "scoring": 0.011,
+        "drift_detection": 0.177,
+        "evidently_report": 1.738,
+        "performance_monitoring": 0.009
       },
       "rows_received": 2000,
       "validation_passed": true,
@@ -1531,19 +1533,19 @@
       },
       "alerts_critical": 2,
       "status": "ALERTA",
-      "total_latency_s": 5.418,
-      "throughput_rows_s": 48780.5
+      "total_latency_s": 1.967,
+      "throughput_rows_s": 181818.2
     },
     {
       "batch": "2026-10",
       "step": 6,
       "stages": {
-        "ingestion": 0.018,
-        "validation": 0.066,
-        "scoring": 0.031,
-        "drift_detection": 0.383,
-        "evidently_report": 5.131,
-        "performance_monitoring": 0.034
+        "ingestion": 0.006,
+        "validation": 0.019,
+        "scoring": 0.016,
+        "drift_detection": 0.189,
+        "evidently_report": 1.428,
+        "performance_monitoring": 0.009
       },
       "rows_received": 2000,
       "validation_passed": true,
@@ -1811,8 +1813,8 @@
       },
       "alerts_critical": 2,
       "status": "ALERTA",
-      "total_latency_s": 5.683,
-      "throughput_rows_s": 64516.1
+      "total_latency_s": 1.674,
+      "throughput_rows_s": 125000.0
     }
   ]
 }

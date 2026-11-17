@@ -1,6 +1,6 @@
 {
   "model_version": "1.0.0",
-  "trained_at": "2026-11-17T01:34:39+00:00",
+  "trained_at": "2026-11-17T23:50:04+00:00",
   "features": [
     "limit_bal",
     "education",
@@ -77,5 +77,5 @@
     "age": 0.015200000256299973,
     "pay_amt6": 0.015200000256299973
   },
-  "reference_data_sha256": "0e1ddc8c86d39d61c071024dd2c27d315dd34cfe07350f657fccd9884b55e8f7"
+  "reference_data_sha256": "6e1782ad367430eea8ba9ac6cf06fc7517fd52171b12c13bb9a695307177f0fd"
 }
