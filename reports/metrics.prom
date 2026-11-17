@@ -27,13 +27,13 @@ credit_rows_scored{batch="2026-09"} 2000.0
 credit_rows_scored{batch="2026-10"} 2000.0
 # HELP credit_latency_seconds latência total do lote
 # TYPE credit_latency_seconds gauge
-credit_latency_seconds{batch="2026-05"} 4.892
-credit_latency_seconds{batch="2026-06"} 4.604
-credit_latency_seconds{batch="2026-07"} 4.345
-credit_latency_seconds{batch="2026-08"} 4.809
-credit_latency_seconds{batch="2026-08_sistema_legado"} 0.178
-credit_latency_seconds{batch="2026-09"} 4.995
-credit_latency_seconds{batch="2026-10"} 4.845
+credit_latency_seconds{batch="2026-05"} 5.912
+credit_latency_seconds{batch="2026-06"} 5.167
+credit_latency_seconds{batch="2026-07"} 5.486
+credit_latency_seconds{batch="2026-08"} 5.876
+credit_latency_seconds{batch="2026-08_sistema_legado"} 0.201
+credit_latency_seconds{batch="2026-09"} 5.418
+credit_latency_seconds{batch="2026-10"} 5.683
 # HELP credit_alerts_total alertas gerados no lote
 # TYPE credit_alerts_total gauge
 credit_alerts_total{batch="2026-05"} 0.0

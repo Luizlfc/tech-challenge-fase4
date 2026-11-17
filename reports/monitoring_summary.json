@@ -36,12 +36,12 @@
       "batch": "2026-05",
       "step": 0,
       "stages": {
-        "ingestion": 0.016,
-        "validation": 0.048,
-        "scoring": 0.019,
-        "drift_detection": 0.092,
-        "evidently_report": 4.678,
-        "performance_monitoring": 0.028
+        "ingestion": 0.023,
+        "validation": 0.081,
+        "scoring": 0.035,
+        "drift_detection": 0.144,
+        "evidently_report": 5.571,
+        "performance_monitoring": 0.039
       },
       "rows_received": 2000,
       "validation_passed": true,
@@ -299,19 +299,19 @@
       "alerts_by_kind": {},
       "alerts_critical": 0,
       "status": "SAUDÁVEL",
-      "total_latency_s": 4.892,
-      "throughput_rows_s": 105263.2
+      "total_latency_s": 5.912,
+      "throughput_rows_s": 57142.9
     },
     {
       "batch": "2026-06",
       "step": 1,
       "stages": {
-        "ingestion": 0.028,
-        "validation": 0.06,
-        "scoring": 0.041,
-        "drift_detection": 0.203,
-        "evidently_report": 4.211,
-        "performance_monitoring": 0.041
+        "ingestion": 0.015,
+        "validation": 0.077,
+        "scoring": 0.044,
+        "drift_detection": 0.246,
+        "evidently_report": 4.723,
+        "performance_monitoring": 0.037
       },
       "rows_received": 2000,
       "validation_passed": true,
@@ -569,19 +569,19 @@
       "alerts_by_kind": {},
       "alerts_critical": 0,
       "status": "SAUDÁVEL",
-      "total_latency_s": 4.604,
-      "throughput_rows_s": 48780.5
+      "total_latency_s": 5.167,
+      "throughput_rows_s": 45454.5
     },
     {
       "batch": "2026-07",
       "step": 2,
       "stages": {
-        "ingestion": 0.021,
-        "validation": 0.077,
-        "scoring": 0.021,
-        "drift_detection": 0.155,
-        "evidently_report": 4.028,
-        "performance_monitoring": 0.029
+        "ingestion": 0.016,
+        "validation": 0.079,
+        "scoring": 0.042,
+        "drift_detection": 0.243,
+        "evidently_report": 5.039,
+        "performance_monitoring": 0.041
       },
       "rows_received": 2000,
       "validation_passed": true,
@@ -843,19 +843,19 @@
       },
       "alerts_critical": 0,
       "status": "ATENÇÃO",
-      "total_latency_s": 4.345,
-      "throughput_rows_s": 95238.1
+      "total_latency_s": 5.486,
+      "throughput_rows_s": 47619.0
     },
     {
       "batch": "2026-08",
       "step": 3,
       "stages": {
-        "ingestion": 0.016,
-        "validation": 0.053,
-        "scoring": 0.016,
-        "drift_detection": 0.23,
-        "evidently_report": 4.445,
-        "performance_monitoring": 0.027
+        "ingestion": 0.018,
+        "validation": 0.065,
+        "scoring": 0.039,
+        "drift_detection": 0.375,
+        "evidently_report": 5.292,
+        "performance_monitoring": 0.035
       },
       "rows_received": 2000,
       "validation_passed": true,
@@ -1123,15 +1123,15 @@
       },
       "alerts_critical": 2,
       "status": "ALERTA",
-      "total_latency_s": 4.809,
-      "throughput_rows_s": 125000.0
+      "total_latency_s": 5.876,
+      "throughput_rows_s": 51282.1
     },
     {
       "batch": "2026-08_sistema_legado",
       "step": 4,
       "stages": {
-        "ingestion": 0.007,
-        "validation": 0.168
+        "ingestion": 0.008,
+        "validation": 0.189
       },
       "rows_received": 520,
       "validation_passed": false,
@@ -1252,18 +1252,18 @@
       "alerts_by_kind": {
         "DATA_CONTRACT_VIOLATION": 1
       },
-      "total_latency_s": 0.178
+      "total_latency_s": 0.201
     },
     {
       "batch": "2026-09",
       "step": 5,
       "stages": {
-        "ingestion": 0.016,
-        "validation": 0.054,
-        "scoring": 0.035,
-        "drift_detection": 0.366,
-        "evidently_report": 4.469,
-        "performance_monitoring": 0.029
+        "ingestion": 0.017,
+        "validation": 0.072,
+        "scoring": 0.041,
+        "drift_detection": 0.416,
+        "evidently_report": 4.814,
+        "performance_monitoring": 0.033
       },
       "rows_received": 2000,
       "validation_passed": true,
@@ -1531,19 +1531,19 @@
       },
       "alerts_critical": 2,
       "status": "ALERTA",
-      "total_latency_s": 4.995,
-      "throughput_rows_s": 57142.9
+      "total_latency_s": 5.418,
+      "throughput_rows_s": 48780.5
     },
     {
       "batch": "2026-10",
       "step": 6,
       "stages": {
-        "ingestion": 0.016,
-        "validation": 0.056,
-        "scoring": 0.043,
-        "drift_detection": 0.414,
-        "evidently_report": 4.259,
-        "performance_monitoring": 0.031
+        "ingestion": 0.018,
+        "validation": 0.066,
+        "scoring": 0.031,
+        "drift_detection": 0.383,
+        "evidently_report": 5.131,
+        "performance_monitoring": 0.034
       },
       "rows_received": 2000,
       "validation_passed": true,
@@ -1811,8 +1811,8 @@
       },
       "alerts_critical": 2,
       "status": "ALERTA",
-      "total_latency_s": 4.845,
-      "throughput_rows_s": 46511.6
+      "total_latency_s": 5.683,
+      "throughput_rows_s": 64516.1
     }
   ]
 }
