@@ -1,0 +1,107 @@
+{
+  "lote_analisado": "2026-10",
+  "intensidade_drift": 1.0,
+  "cenarios": {
+    "A_sem_drift": {
+      "auc": 0.7721,
+      "gini": 0.5442,
+      "ks_score": 0.4165,
+      "precision": 0.5966,
+      "recall": 0.4626,
+      "f1": 0.5211,
+      "approval_rate": 0.824,
+      "default_rate_observed": 0.227,
+      "bad_approved_share": 0.1481
+    },
+    "B_somente_data_drift": {
+      "auc": 0.7421,
+      "gini": 0.4841,
+      "ks_score": 0.378,
+      "precision": 0.4916,
+      "recall": 0.5176,
+      "f1": 0.5043,
+      "approval_rate": 0.761,
+      "default_rate_observed": 0.227,
+      "bad_approved_share": 0.1439
+    },
+    "C_somente_concept_drift": {
+      "auc": 0.7317,
+      "gini": 0.4633,
+      "ks_score": 0.3363,
+      "precision": 0.6477,
+      "recall": 0.3851,
+      "f1": 0.4831,
+      "approval_rate": 0.824,
+      "default_rate_observed": 0.296,
+      "bad_approved_share": 0.2209
+    },
+    "D_data_e_concept_drift": {
+      "auc": 0.6934,
+      "gini": 0.3868,
+      "ks_score": 0.2662,
+      "precision": 0.6736,
+      "recall": 0.3856,
+      "f1": 0.4905,
+      "approval_rate": 0.761,
+      "default_rate_observed": 0.4175,
+      "bad_approved_share": 0.3371
+    }
+  },
+  "atribuicao_queda_auc": {
+    "queda_auc_total": 0.0787,
+    "efeito_isolado_data_drift": 0.03,
+    "efeito_isolado_concept_drift": 0.0404
+  },
+  "segmentos_cenario_real": {
+    "novo_perfil_jovem_limite_baixo": {
+      "n": 843,
+      "default_rate": 0.548,
+      "score_medio": 0.3262,
+      "auc": 0.6195
+    },
+    "carteira_tradicional": {
+      "n": 1157,
+      "default_rate": 0.3224,
+      "score_medio": 0.2452,
+      "auc": 0.7118
+    },
+    "utilizacao_alta_>50%": {
+      "n": 1129,
+      "default_rate": 0.5297,
+      "score_medio": 0.3317,
+      "auc": 0.6322
+    },
+    "utilizacao_baixa_<=50%": {
+      "n": 871,
+      "default_rate": 0.2721,
+      "score_medio": 0.2114,
+      "auc": 0.709
+    }
+  },
+  "prescricao_retreino": {
+    "challenger_treino": "referência (treino) + lotes rotulados 2026-08 e 2026-09",
+    "avaliado_em": "2026-10",
+    "champion_v1": {
+      "auc": 0.6934,
+      "gini": 0.3868,
+      "ks_score": 0.2662,
+      "precision": 0.6736,
+      "recall": 0.3856,
+      "f1": 0.4905,
+      "approval_rate": 0.761,
+      "default_rate_observed": 0.4175,
+      "bad_approved_share": 0.3371
+    },
+    "challenger_v2": {
+      "auc": 0.7181,
+      "gini": 0.4362,
+      "ks_score": 0.3167,
+      "precision": 0.5866,
+      "recall": 0.6287,
+      "f1": 0.6069,
+      "approval_rate": 0.5525,
+      "default_rate_observed": 0.4175,
+      "bad_approved_share": 0.2805
+    }
+  }
+}

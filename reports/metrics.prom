@@ -1,0 +1,77 @@
+# HELP credit_pipeline_success 1 se o lote foi processado, 0 se bloqueado
+# TYPE credit_pipeline_success gauge
+credit_pipeline_success{batch="2026-05"} 1.0
+credit_pipeline_success{batch="2026-06"} 1.0
+credit_pipeline_success{batch="2026-07"} 1.0
+credit_pipeline_success{batch="2026-08"} 1.0
+credit_pipeline_success{batch="2026-08_sistema_legado"} 0.0
+credit_pipeline_success{batch="2026-09"} 1.0
+credit_pipeline_success{batch="2026-10"} 1.0
+# HELP credit_rows_received linhas recebidas no lote
+# TYPE credit_rows_received gauge
+credit_rows_received{batch="2026-05"} 2000.0
+credit_rows_received{batch="2026-06"} 2000.0
+credit_rows_received{batch="2026-07"} 2000.0
+credit_rows_received{batch="2026-08"} 2000.0
+credit_rows_received{batch="2026-08_sistema_legado"} 520.0
+credit_rows_received{batch="2026-09"} 2000.0
+credit_rows_received{batch="2026-10"} 2000.0
+# HELP credit_rows_scored linhas pontuadas
+# TYPE credit_rows_scored gauge
+credit_rows_scored{batch="2026-05"} 2000.0
+credit_rows_scored{batch="2026-06"} 2000.0
+credit_rows_scored{batch="2026-07"} 2000.0
+credit_rows_scored{batch="2026-08"} 2000.0
+credit_rows_scored{batch="2026-08_sistema_legado"} 0.0
+credit_rows_scored{batch="2026-09"} 2000.0
+credit_rows_scored{batch="2026-10"} 2000.0
+# HELP credit_latency_seconds latência total do lote
+# TYPE credit_latency_seconds gauge
+credit_latency_seconds{batch="2026-05"} 5.054
+credit_latency_seconds{batch="2026-06"} 4.307
+credit_latency_seconds{batch="2026-07"} 4.412
+credit_latency_seconds{batch="2026-08"} 5.006
+credit_latency_seconds{batch="2026-08_sistema_legado"} 0.17
+credit_latency_seconds{batch="2026-09"} 4.884
+credit_latency_seconds{batch="2026-10"} 4.919
+# HELP credit_alerts_total alertas gerados no lote
+# TYPE credit_alerts_total gauge
+credit_alerts_total{batch="2026-05"} 0.0
+credit_alerts_total{batch="2026-06"} 0.0
+credit_alerts_total{batch="2026-07"} 1.0
+credit_alerts_total{batch="2026-08"} 4.0
+credit_alerts_total{batch="2026-08_sistema_legado"} 1.0
+credit_alerts_total{batch="2026-09"} 4.0
+credit_alerts_total{batch="2026-10"} 4.0
+# HELP credit_model_auc AUC com rótulos defasados
+# TYPE credit_model_auc gauge
+credit_model_auc{batch="2026-05"} 0.7665440443150149
+credit_model_auc{batch="2026-06"} 0.7597888904685077
+credit_model_auc{batch="2026-07"} 0.7578273400144102
+credit_model_auc{batch="2026-08"} 0.7078667683880789
+credit_model_auc{batch="2026-09"} 0.699867876059633
+credit_model_auc{batch="2026-10"} 0.6934239675156126
+# HELP credit_drift_share fração de features com drift
+# TYPE credit_drift_share gauge
+credit_drift_share{batch="2026-05"} 0.0
+credit_drift_share{batch="2026-06"} 0.0
+credit_drift_share{batch="2026-07"} 0.0
+credit_drift_share{batch="2026-08"} 0.0952
+credit_drift_share{batch="2026-09"} 0.1429
+credit_drift_share{batch="2026-10"} 0.1429
+# HELP credit_max_psi maior PSI entre as features
+# TYPE credit_max_psi gauge
+credit_max_psi{batch="2026-05"} 0.0128
+credit_max_psi{batch="2026-06"} 0.0623
+credit_max_psi{batch="2026-07"} 0.1427
+credit_max_psi{batch="2026-08"} 0.244
+credit_max_psi{batch="2026-09"} 0.3458
+credit_max_psi{batch="2026-10"} 0.3936
+# HELP credit_approval_rate taxa de aprovação
+# TYPE credit_approval_rate gauge
+credit_approval_rate{batch="2026-05"} 0.8185
+credit_approval_rate{batch="2026-06"} 0.8155
+credit_approval_rate{batch="2026-07"} 0.7845
+credit_approval_rate{batch="2026-08"} 0.7765
+credit_approval_rate{batch="2026-09"} 0.78
+credit_approval_rate{batch="2026-10"} 0.761

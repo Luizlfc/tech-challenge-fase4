@@ -1,0 +1,1624 @@
+{
+  "model": {
+    "model_version": "1.0.0",
+    "threshold": 0.35,
+    "baseline_metrics": {
+      "auc": 0.7839355280125464,
+      "gini": 0.5678710560250928,
+      "ks_score": 0.436337655944965,
+      "precision": 0.5896414342629482,
+      "recall": 0.49581239530988275,
+      "f1": 0.5386715195632393,
+      "approval_rate": 0.8140740740740741,
+      "default_rate_observed": 0.22111111111111112
+    },
+    "baseline_fairness": {
+      "sex": {
+        "approval_rate_by_group": {
+          "feminino": 0.8388,
+          "masculino": 0.7777
+        },
+        "disparate_impact": 0.9271
+      },
+      "age_band": {
+        "approval_rate_by_group": {
+          "18-25": 0.7654,
+          "26-35": 0.8408,
+          "36-50": 0.8127,
+          "51+": 0.7432
+        },
+        "disparate_impact": 0.8839
+      }
+    }
+  },
+  "batches": [
+    {
+      "batch": "2026-05",
+      "step": 0,
+      "stages": {
+        "ingestion": 0.022,
+        "validation": 0.091,
+        "scoring": 0.017,
+        "drift_detection": 0.167,
+        "evidently_report": 4.725,
+        "performance_monitoring": 0.021
+      },
+      "rows_received": 2000,
+      "rows_scored": 2000,
+      "feature_drift": [
+        {
+          "feature": "pay_6",
+          "psi": 0.0128,
+          "ks_stat": 0.0146,
+          "ks_pvalue": 0.963,
+          "status": "estável"
+        },
+        {
+          "feature": "age",
+          "psi": 0.0112,
+          "ks_stat": 0.0177,
+          "ks_pvalue": 0.857,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_4",
+          "psi": 0.0102,
+          "ks_stat": 0.0201,
+          "ks_pvalue": 0.734,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt3",
+          "psi": 0.0101,
+          "ks_stat": 0.0206,
+          "ks_pvalue": 0.702,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt5",
+          "psi": 0.0094,
+          "ks_stat": 0.0219,
+          "ks_pvalue": 0.627,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt6",
+          "psi": 0.0093,
+          "ks_stat": 0.0237,
+          "ks_pvalue": 0.528,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_3",
+          "psi": 0.0088,
+          "ks_stat": 0.0157,
+          "ks_pvalue": 0.934,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt6",
+          "psi": 0.0076,
+          "ks_stat": 0.0267,
+          "ks_pvalue": 0.378,
+          "status": "estável"
+        },
+        {
+          "feature": "prob_default",
+          "psi": 0.0072,
+          "ks_stat": 0.0183,
+          "ks_pvalue": 0.829,
+          "status": "estável"
+        },
+        {
+          "feature": "limit_bal",
+          "psi": 0.007,
+          "ks_stat": 0.0308,
+          "ks_pvalue": 0.221,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt1",
+          "psi": 0.0064,
+          "ks_stat": 0.0178,
+          "ks_pvalue": 0.853,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_5",
+          "psi": 0.0062,
+          "ks_stat": 0.0107,
+          "ks_pvalue": 0.999,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt5",
+          "psi": 0.0057,
+          "ks_stat": 0.016,
+          "ks_pvalue": 0.923,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_0",
+          "psi": 0.0056,
+          "ks_stat": 0.0083,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt2",
+          "psi": 0.0055,
+          "ks_stat": 0.0191,
+          "ks_pvalue": 0.789,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt4",
+          "psi": 0.0055,
+          "ks_stat": 0.0214,
+          "ks_pvalue": 0.66,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_2",
+          "psi": 0.0054,
+          "ks_stat": 0.0094,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt4",
+          "psi": 0.0045,
+          "ks_stat": 0.0124,
+          "ks_pvalue": 0.993,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt1",
+          "psi": 0.003,
+          "ks_stat": 0.0175,
+          "ks_pvalue": 0.865,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt2",
+          "psi": 0.0029,
+          "ks_stat": 0.0242,
+          "ks_pvalue": 0.502,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt3",
+          "psi": 0.0027,
+          "ks_stat": 0.0167,
+          "ks_pvalue": 0.9,
+          "status": "estável"
+        },
+        {
+          "feature": "education",
+          "psi": 0.0002,
+          "ks_stat": 0.0065,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        }
+      ],
+      "n_drifted": 0,
+      "n_warning": 0,
+      "drift_share": 0.0,
+      "max_psi": 0.0128,
+      "evidently_report": "evidently/drift_report_2026-05.html",
+      "evidently": {
+        "psi": {
+          "limit_bal": 0.005668161563413313,
+          "education": 0.000248621841905744,
+          "age": 0.00724246261552319,
+          "pay_0": 0.005558931738060138,
+          "pay_2": 0.0054349694351152845,
+          "pay_3": 0.008774624390837225,
+          "pay_4": 0.010173223541262757,
+          "pay_5": 0.006237424271143016,
+          "pay_6": 0.012768103242067409,
+          "bill_amt1": 0.0030771702934758766,
+          "bill_amt2": 0.0023120755083411593,
+          "bill_amt3": 0.003884972654137317,
+          "bill_amt4": 0.003945091453557533,
+          "bill_amt5": 0.007095409855691871,
+          "bill_amt6": 0.007060928615123047,
+          "pay_amt1": 0.011799850610729546,
+          "pay_amt2": 0.012393945155560946,
+          "pay_amt3": 0.0028088148007853614,
+          "pay_amt4": 0.014912130131132037,
+          "pay_amt5": 0.009862990239258018,
+          "pay_amt6": 0.0054917772348409616,
+          "prob_default": 0.005266969952275687
+        },
+        "ks_pvalue": {
+          "limit_bal": 0.22088393986805657,
+          "age": 0.8570137639457327,
+          "bill_amt1": 0.8645756102705082,
+          "pay_amt1": 0.8527387992445813
+        },
+        "drifted_columns": {
+          "count": 0.0,
+          "share": 0.0
+        },
+        "roc_auc": 0.766544044315015
+      },
+      "performance": {
+        "auc": 0.7665440443150149,
+        "gini": 0.5330880886300298,
+        "ks_score": 0.41272916892250006,
+        "precision": 0.5895316804407713,
+        "recall": 0.4713656387665198,
+        "f1": 0.5238678090575275,
+        "approval_rate": 0.8185,
+        "default_rate_observed": 0.227
+      },
+      "fairness": {
+        "sex": {
+          "approval_rate_by_group": {
+            "feminino": 0.8278,
+            "masculino": 0.8051
+          },
+          "disparate_impact": 0.9726
+        },
+        "age_band": {
+          "approval_rate_by_group": {
+            "18-25": 0.744,
+            "26-35": 0.8299,
+            "36-50": 0.8336,
+            "51+": 0.8014
+          },
+          "disparate_impact": 0.8926
+        }
+      },
+      "alerts": 0,
+      "alert_kinds": [],
+      "status": "SAUDÁVEL",
+      "total_latency_s": 5.054,
+      "throughput_rows_s": 117647.1
+    },
+    {
+      "batch": "2026-06",
+      "step": 1,
+      "stages": {
+        "ingestion": 0.012,
+        "validation": 0.04,
+        "scoring": 0.01,
+        "drift_detection": 0.123,
+        "evidently_report": 4.078,
+        "performance_monitoring": 0.034
+      },
+      "rows_received": 2000,
+      "rows_scored": 2000,
+      "feature_drift": [
+        {
+          "feature": "pay_amt5",
+          "psi": 0.0623,
+          "ks_stat": 0.0583,
+          "ks_pvalue": 0.00078,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt1",
+          "psi": 0.0574,
+          "ks_stat": 0.0659,
+          "ks_pvalue": 8.67e-05,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt6",
+          "psi": 0.0456,
+          "ks_stat": 0.0387,
+          "ks_pvalue": 0.0624,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt4",
+          "psi": 0.0453,
+          "ks_stat": 0.0621,
+          "ks_pvalue": 0.00027,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt2",
+          "psi": 0.04,
+          "ks_stat": 0.072,
+          "ks_pvalue": 1.25e-05,
+          "status": "estável"
+        },
+        {
+          "feature": "limit_bal",
+          "psi": 0.0363,
+          "ks_stat": 0.0831,
+          "ks_pvalue": 2.4e-07,
+          "status": "estável"
+        },
+        {
+          "feature": "age",
+          "psi": 0.0328,
+          "ks_stat": 0.0676,
+          "ks_pvalue": 5.22e-05,
+          "status": "estável"
+        },
+        {
+          "feature": "prob_default",
+          "psi": 0.0295,
+          "ks_stat": 0.0763,
+          "ks_pvalue": 2.85e-06,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt2",
+          "psi": 0.0217,
+          "ks_stat": 0.0541,
+          "ks_pvalue": 0.00231,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt4",
+          "psi": 0.0191,
+          "ks_stat": 0.0596,
+          "ks_pvalue": 0.00054,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt6",
+          "psi": 0.0187,
+          "ks_stat": 0.0531,
+          "ks_pvalue": 0.0029,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt3",
+          "psi": 0.0148,
+          "ks_stat": 0.067,
+          "ks_pvalue": 6.2e-05,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt3",
+          "psi": 0.0144,
+          "ks_stat": 0.0528,
+          "ks_pvalue": 0.00313,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt5",
+          "psi": 0.0129,
+          "ks_stat": 0.0588,
+          "ks_pvalue": 0.000678,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt1",
+          "psi": 0.0121,
+          "ks_stat": 0.0985,
+          "ks_pvalue": 3.74e-10,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_0",
+          "psi": 0.0097,
+          "ks_stat": 0.0074,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_4",
+          "psi": 0.0097,
+          "ks_stat": 0.0071,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_5",
+          "psi": 0.0092,
+          "ks_stat": 0.0197,
+          "ks_pvalue": 0.756,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_3",
+          "psi": 0.0079,
+          "ks_stat": 0.0218,
+          "ks_pvalue": 0.637,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_6",
+          "psi": 0.006,
+          "ks_stat": 0.0139,
+          "ks_pvalue": 0.977,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_2",
+          "psi": 0.0056,
+          "ks_stat": 0.0039,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        },
+        {
+          "feature": "education",
+          "psi": 0.0028,
+          "ks_stat": 0.017,
+          "ks_pvalue": 0.885,
+          "status": "estável"
+        }
+      ],
+      "n_drifted": 0,
+      "n_warning": 0,
+      "drift_share": 0.0,
+      "max_psi": 0.0623,
+      "evidently_report": "evidently/drift_report_2026-06.html",
+      "evidently": {
+        "psi": {
+          "limit_bal": 0.03614218272548953,
+          "education": 0.0027648979880684817,
+          "age": 0.030090097042034237,
+          "pay_0": 0.009693548187465206,
+          "pay_2": 0.0055859645480266645,
+          "pay_3": 0.007944286667558354,
+          "pay_4": 0.009735750663515043,
+          "pay_5": 0.009205596611158169,
+          "pay_6": 0.006038873653254494,
+          "bill_amt1": 0.012743698107132289,
+          "bill_amt2": 0.011298325833789855,
+          "bill_amt3": 0.01324474306571299,
+          "bill_amt4": 0.008799686184989945,
+          "bill_amt5": 0.012441204056882788,
+          "bill_amt6": 0.012829236395163644,
+          "pay_amt1": 0.007691837809475559,
+          "pay_amt2": 0.003959552308962727,
+          "pay_amt3": 0.0029148892102748396,
+          "pay_amt4": 0.013503568282067932,
+          "pay_amt5": 0.0031740057538548606,
+          "pay_amt6": 0.022765723268089764,
+          "prob_default": 0.04044672424598027
+        },
+        "ks_pvalue": {
+          "limit_bal": 2.4029411000555396e-07,
+          "age": 5.217583918502343e-05,
+          "bill_amt1": 8.667980074537588e-05,
+          "pay_amt1": 3.74411279702099e-10
+        },
+        "drifted_columns": {
+          "count": 0.0,
+          "share": 0.0
+        },
+        "roc_auc": 0.7597888904685077
+      },
+      "performance": {
+        "auc": 0.7597888904685077,
+        "gini": 0.5195777809370155,
+        "ks_score": 0.4242576407538172,
+        "precision": 0.6124661246612466,
+        "recall": 0.437137330754352,
+        "f1": 0.510158013544018,
+        "approval_rate": 0.8155,
+        "default_rate_observed": 0.2585
+      },
+      "fairness": {
+        "sex": {
+          "approval_rate_by_group": {
+            "feminino": 0.8261,
+            "masculino": 0.7987
+          },
+          "disparate_impact": 0.9668
+        },
+        "age_band": {
+          "approval_rate_by_group": {
+            "18-25": 0.769,
+            "26-35": 0.8323,
+            "36-50": 0.8216,
+            "51+": 0.8
+          },
+          "disparate_impact": 0.9239
+        }
+      },
+      "alerts": 0,
+      "alert_kinds": [],
+      "status": "SAUDÁVEL",
+      "total_latency_s": 4.307,
+      "throughput_rows_s": 200000.0
+    },
+    {
+      "batch": "2026-07",
+      "step": 2,
+      "stages": {
+        "ingestion": 0.017,
+        "validation": 0.082,
+        "scoring": 0.019,
+        "drift_detection": 0.262,
+        "evidently_report": 3.987,
+        "performance_monitoring": 0.032
+      },
+      "rows_received": 2000,
+      "rows_scored": 2000,
+      "feature_drift": [
+        {
+          "feature": "pay_amt1",
+          "psi": 0.1427,
+          "ks_stat": 0.1143,
+          "ks_pvalue": 1.61e-13,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt5",
+          "psi": 0.0994,
+          "ks_stat": 0.0949,
+          "ks_pvalue": 1.83e-09,
+          "status": "estável"
+        },
+        {
+          "feature": "prob_default",
+          "psi": 0.0889,
+          "ks_stat": 0.1441,
+          "ks_pvalue": 2.85e-21,
+          "status": "atenção"
+        },
+        {
+          "feature": "limit_bal",
+          "psi": 0.0852,
+          "ks_stat": 0.132,
+          "ks_pvalue": 6.58e-18,
+          "status": "atenção"
+        },
+        {
+          "feature": "age",
+          "psi": 0.0847,
+          "ks_stat": 0.1251,
+          "ks_pvalue": 4.04e-16,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt4",
+          "psi": 0.0781,
+          "ks_stat": 0.0877,
+          "ks_pvalue": 3.91e-08,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt2",
+          "psi": 0.0689,
+          "ks_stat": 0.1072,
+          "ks_pvalue": 6.05e-12,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt2",
+          "psi": 0.05,
+          "ks_stat": 0.0842,
+          "ks_pvalue": 1.57e-07,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt3",
+          "psi": 0.0478,
+          "ks_stat": 0.0789,
+          "ks_pvalue": 1.16e-06,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt1",
+          "psi": 0.047,
+          "ks_stat": 0.0938,
+          "ks_pvalue": 3.05e-09,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt6",
+          "psi": 0.0411,
+          "ks_stat": 0.0887,
+          "ks_pvalue": 2.6e-08,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt3",
+          "psi": 0.0394,
+          "ks_stat": 0.0866,
+          "ks_pvalue": 6.02e-08,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_amt6",
+          "psi": 0.0387,
+          "ks_stat": 0.067,
+          "ks_pvalue": 6.16e-05,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt5",
+          "psi": 0.034,
+          "ks_stat": 0.0939,
+          "ks_pvalue": 2.86e-09,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt4",
+          "psi": 0.0321,
+          "ks_stat": 0.0955,
+          "ks_pvalue": 1.45e-09,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_5",
+          "psi": 0.0118,
+          "ks_stat": 0.0076,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_3",
+          "psi": 0.0117,
+          "ks_stat": 0.0183,
+          "ks_pvalue": 0.829,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_2",
+          "psi": 0.0101,
+          "ks_stat": 0.011,
+          "ks_pvalue": 0.999,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_4",
+          "psi": 0.008,
+          "ks_stat": 0.0099,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_0",
+          "psi": 0.0063,
+          "ks_stat": 0.0088,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_6",
+          "psi": 0.0034,
+          "ks_stat": 0.0154,
+          "ks_pvalue": 0.944,
+          "status": "estável"
+        },
+        {
+          "feature": "education",
+          "psi": 0.0012,
+          "ks_stat": 0.0105,
+          "ks_pvalue": 0.999,
+          "status": "estável"
+        }
+      ],
+      "n_drifted": 0,
+      "n_warning": 4,
+      "drift_share": 0.0,
+      "max_psi": 0.1427,
+      "evidently_report": "evidently/drift_report_2026-07.html",
+      "evidently": {
+        "psi": {
+          "limit_bal": 0.06488212431696248,
+          "education": 0.001212258212181312,
+          "age": 0.09844019070723568,
+          "pay_0": 0.006339886718396627,
+          "pay_2": 0.010062085083409758,
+          "pay_3": 0.011747405731950355,
+          "pay_4": 0.008041632474869798,
+          "pay_5": 0.011768649367600704,
+          "pay_6": 0.003395893691516899,
+          "bill_amt1": 0.03603031558186311,
+          "bill_amt2": 0.03999390171398071,
+          "bill_amt3": 0.03632430730183364,
+          "bill_amt4": 0.03360903893883991,
+          "bill_amt5": 0.04260528236870175,
+          "bill_amt6": 0.024244085119055174,
+          "pay_amt1": 0.02025051061401129,
+          "pay_amt2": 0.008444571722706027,
+          "pay_amt3": 0.0039272257072109126,
+          "pay_amt4": 0.026353441152225425,
+          "pay_amt5": 0.02812570787099129,
+          "pay_amt6": 0.01581718061229885,
+          "prob_default": 0.08619930757276205
+        },
+        "ks_pvalue": {
+          "limit_bal": 6.576279197638182e-18,
+          "age": 4.0446921593425027e-16,
+          "bill_amt1": 3.045224639832904e-09,
+          "pay_amt1": 1.6062696900505876e-13
+        },
+        "drifted_columns": {
+          "count": 0.0,
+          "share": 0.0
+        },
+        "roc_auc": 0.7578273400144102
+      },
+      "performance": {
+        "auc": 0.7578273400144102,
+        "gini": 0.5156546800288204,
+        "ks_score": 0.40564868419063743,
+        "precision": 0.6078886310904872,
+        "recall": 0.47985347985347987,
+        "f1": 0.5363357215967247,
+        "approval_rate": 0.7845,
+        "default_rate_observed": 0.273
+      },
+      "fairness": {
+        "sex": {
+          "approval_rate_by_group": {
+            "feminino": 0.7992,
+            "masculino": 0.761
+          },
+          "disparate_impact": 0.9523
+        },
+        "age_band": {
+          "approval_rate_by_group": {
+            "18-25": 0.7308,
+            "26-35": 0.8152,
+            "36-50": 0.7975,
+            "51+": 0.7176
+          },
+          "disparate_impact": 0.8802
+        }
+      },
+      "alerts": 1,
+      "alert_kinds": [
+        "DEFAULT_RATE_SHIFT"
+      ],
+      "status": "ATENÇÃO",
+      "total_latency_s": 4.412,
+      "throughput_rows_s": 105263.2
+    },
+    {
+      "batch": "2026-08",
+      "step": 3,
+      "stages": {
+        "ingestion": 0.015,
+        "validation": 0.06,
+        "scoring": 0.017,
+        "drift_detection": 0.196,
+        "evidently_report": 4.67,
+        "performance_monitoring": 0.029
+      },
+      "rows_received": 2000,
+      "rows_scored": 2000,
+      "feature_drift": [
+        {
+          "feature": "age",
+          "psi": 0.244,
+          "ks_stat": 0.2166,
+          "ks_pvalue": 1.12e-47,
+          "status": "drift"
+        },
+        {
+          "feature": "limit_bal",
+          "psi": 0.2172,
+          "ks_stat": 0.2105,
+          "ks_pvalue": 4.79e-45,
+          "status": "drift"
+        },
+        {
+          "feature": "prob_default",
+          "psi": 0.206,
+          "ks_stat": 0.1974,
+          "ks_pvalue": 1.23e-39,
+          "status": "drift"
+        },
+        {
+          "feature": "pay_amt1",
+          "psi": 0.1465,
+          "ks_stat": 0.1578,
+          "ks_pvalue": 1.95e-25,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt6",
+          "psi": 0.1298,
+          "ks_stat": 0.1414,
+          "ks_pvalue": 1.75e-20,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt5",
+          "psi": 0.1172,
+          "ks_stat": 0.0941,
+          "ks_pvalue": 2.66e-09,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt2",
+          "psi": 0.1162,
+          "ks_stat": 0.1212,
+          "ks_pvalue": 3.63e-15,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt1",
+          "psi": 0.1022,
+          "ks_stat": 0.1255,
+          "ks_pvalue": 3.09e-16,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt4",
+          "psi": 0.1004,
+          "ks_stat": 0.0968,
+          "ks_pvalue": 8.07e-10,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt6",
+          "psi": 0.0968,
+          "ks_stat": 0.0821,
+          "ks_pvalue": 3.52e-07,
+          "status": "estável"
+        },
+        {
+          "feature": "bill_amt5",
+          "psi": 0.0924,
+          "ks_stat": 0.1352,
+          "ks_pvalue": 9.28e-19,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt4",
+          "psi": 0.0923,
+          "ks_stat": 0.1295,
+          "ks_pvalue": 2.92e-17,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt2",
+          "psi": 0.0865,
+          "ks_stat": 0.1183,
+          "ks_pvalue": 1.83e-14,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt3",
+          "psi": 0.0674,
+          "ks_stat": 0.1154,
+          "ks_pvalue": 8.82e-14,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt3",
+          "psi": 0.0553,
+          "ks_stat": 0.1075,
+          "ks_pvalue": 5.08e-12,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_6",
+          "psi": 0.0106,
+          "ks_stat": 0.0234,
+          "ks_pvalue": 0.547,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_5",
+          "psi": 0.0087,
+          "ks_stat": 0.0201,
+          "ks_pvalue": 0.73,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_0",
+          "psi": 0.0085,
+          "ks_stat": 0.0224,
+          "ks_pvalue": 0.601,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_4",
+          "psi": 0.0085,
+          "ks_stat": 0.0087,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_2",
+          "psi": 0.004,
+          "ks_stat": 0.012,
+          "ks_pvalue": 0.996,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_3",
+          "psi": 0.0023,
+          "ks_stat": 0.0117,
+          "ks_pvalue": 0.997,
+          "status": "estável"
+        },
+        {
+          "feature": "education",
+          "psi": 0.0003,
+          "ks_stat": 0.0035,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        }
+      ],
+      "n_drifted": 2,
+      "n_warning": 11,
+      "drift_share": 0.0952,
+      "max_psi": 0.244,
+      "evidently_report": "evidently/drift_report_2026-08.html",
+      "evidently": {
+        "psi": {
+          "limit_bal": 0.15533487280105887,
+          "education": 0.0002841251754872455,
+          "age": 0.24463046232784463,
+          "pay_0": 0.008452575031714359,
+          "pay_2": 0.0039894371428903525,
+          "pay_3": 0.0023062088461343927,
+          "pay_4": 0.008520570213229373,
+          "pay_5": 0.008685278037867082,
+          "pay_6": 0.010606516567034392,
+          "bill_amt1": 0.09586529871732476,
+          "bill_amt2": 0.08149925689837723,
+          "bill_amt3": 0.0574401154180081,
+          "bill_amt4": 0.08018872454033933,
+          "bill_amt5": 0.10210203391190195,
+          "bill_amt6": 0.11135386521060461,
+          "pay_amt1": 0.009281835670049008,
+          "pay_amt2": 0.0034475200895963186,
+          "pay_amt3": 0.0020357907135047574,
+          "pay_amt4": 0.009215539510000027,
+          "pay_amt5": 0.012286553960403441,
+          "pay_amt6": 0.016397455737890174,
+          "prob_default": 0.20391591933125805
+        },
+        "ks_pvalue": {
+          "limit_bal": 4.7902170763612635e-45,
+          "age": 1.1198294099571177e-47,
+          "bill_amt1": 3.0927257859937566e-16,
+          "pay_amt1": 1.9512758778463114e-25
+        },
+        "drifted_columns": {
+          "count": 2.0,
+          "share": 0.09090909090909091
+        },
+        "roc_auc": 0.7078667683880789
+      },
+      "performance": {
+        "auc": 0.7078667683880789,
+        "gini": 0.4157335367761579,
+        "ks_score": 0.29698667894823816,
+        "precision": 0.5637583892617449,
+        "recall": 0.40842787682333875,
+        "f1": 0.47368421052631576,
+        "approval_rate": 0.7765,
+        "default_rate_observed": 0.3085
+      },
+      "fairness": {
+        "sex": {
+          "approval_rate_by_group": {
+            "feminino": 0.7889,
+            "masculino": 0.7576
+          },
+          "disparate_impact": 0.9603
+        },
+        "age_band": {
+          "approval_rate_by_group": {
+            "18-25": 0.7039,
+            "26-35": 0.8178,
+            "36-50": 0.8026,
+            "51+": 0.7544
+          },
+          "disparate_impact": 0.8607
+        }
+      },
+      "alerts": 4,
+      "alert_kinds": [
+        "CONCEPT_DRIFT",
+        "DATA_DRIFT",
+        "DEFAULT_RATE_SHIFT",
+        "PREDICTION_DRIFT"
+      ],
+      "status": "ALERTA",
+      "total_latency_s": 5.006,
+      "throughput_rows_s": 117647.1
+    },
+    {
+      "batch": "2026-08_sistema_legado",
+      "step": 4,
+      "stages": {
+        "ingestion": 0.008,
+        "validation": 0.16
+      },
+      "rows_received": 520,
+      "status": "BLOQUEADO",
+      "rows_scored": 0,
+      "violations": [
+        {
+          "column": "limit_bal",
+          "check": "not_nullable",
+          "n_cases": 45,
+          "examples": [
+            "nan",
+            "nan",
+            "nan"
+          ]
+        },
+        {
+          "column": "client_hash",
+          "check": "field_uniqueness",
+          "n_cases": 40,
+          "examples": [
+            "7456ad3a8171856d",
+            "a079515e9aa3b0ac",
+            "b4ed918846506862"
+          ]
+        },
+        {
+          "column": "age",
+          "check": "greater_than_or_equal_to(18)",
+          "n_cases": 11,
+          "examples": [
+            "17",
+            "0",
+            "15"
+          ]
+        },
+        {
+          "column": "pay_amt1",
+          "check": "greater_than_or_equal_to(0)",
+          "n_cases": 10,
+          "examples": [
+            "-1500.0",
+            "-1500.0",
+            "-1500.0"
+          ]
+        },
+        {
+          "column": "education",
+          "check": "isin([1, 2, 3, 4])",
+          "n_cases": 5,
+          "examples": [
+            "7",
+            "7",
+            "7"
+          ]
+        },
+        {
+          "column": "pay_0",
+          "check": "less_than_or_equal_to(8)",
+          "n_cases": 5,
+          "examples": [
+            "99",
+            "99",
+            "99"
+          ]
+        },
+        {
+          "column": "age",
+          "check": "less_than_or_equal_to(100)",
+          "n_cases": 4,
+          "examples": [
+            "150",
+            "150",
+            "150"
+          ]
+        },
+        {
+          "column": "CreditContract v1.0",
+          "check": "column_in_schema",
+          "n_cases": 1,
+          "examples": [
+            "cpf"
+          ]
+        },
+        {
+          "column": "CreditContract v1.0",
+          "check": "linhas duplicadas",
+          "n_cases": 1,
+          "examples": [
+            "False"
+          ]
+        }
+      ],
+      "alerts": 1,
+      "total_latency_s": 0.17
+    },
+    {
+      "batch": "2026-09",
+      "step": 5,
+      "stages": {
+        "ingestion": 0.014,
+        "validation": 0.056,
+        "scoring": 0.014,
+        "drift_detection": 0.32,
+        "evidently_report": 4.437,
+        "performance_monitoring": 0.029
+      },
+      "rows_received": 2000,
+      "rows_scored": 2000,
+      "feature_drift": [
+        {
+          "feature": "age",
+          "psi": 0.3458,
+          "ks_stat": 0.2681,
+          "ks_pvalue": 4.09e-73,
+          "status": "drift"
+        },
+        {
+          "feature": "prob_default",
+          "psi": 0.3284,
+          "ks_stat": 0.2461,
+          "ks_pvalue": 0.0,
+          "status": "drift"
+        },
+        {
+          "feature": "limit_bal",
+          "psi": 0.3227,
+          "ks_stat": 0.266,
+          "ks_pvalue": 5.56e-72,
+          "status": "drift"
+        },
+        {
+          "feature": "pay_amt2",
+          "psi": 0.218,
+          "ks_stat": 0.1758,
+          "ks_pvalue": 1.69e-31,
+          "status": "drift"
+        },
+        {
+          "feature": "pay_amt1",
+          "psi": 0.1985,
+          "ks_stat": 0.2008,
+          "ks_pvalue": 5.21e-41,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt5",
+          "psi": 0.1475,
+          "ks_stat": 0.1387,
+          "ks_pvalue": 9.74e-20,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt4",
+          "psi": 0.1265,
+          "ks_stat": 0.1254,
+          "ks_pvalue": 3.44e-16,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt3",
+          "psi": 0.1081,
+          "ks_stat": 0.1528,
+          "ks_pvalue": 7.25e-24,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt6",
+          "psi": 0.1081,
+          "ks_stat": 0.1114,
+          "ks_pvalue": 7.11e-13,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt1",
+          "psi": 0.1027,
+          "ks_stat": 0.1286,
+          "ks_pvalue": 5.25e-17,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt2",
+          "psi": 0.0998,
+          "ks_stat": 0.1268,
+          "ks_pvalue": 1.48e-16,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt6",
+          "psi": 0.0982,
+          "ks_stat": 0.1244,
+          "ks_pvalue": 6.01e-16,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt5",
+          "psi": 0.0915,
+          "ks_stat": 0.1388,
+          "ks_pvalue": 9.18e-20,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt4",
+          "psi": 0.0811,
+          "ks_stat": 0.1239,
+          "ks_pvalue": 7.84e-16,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt3",
+          "psi": 0.0781,
+          "ks_stat": 0.1199,
+          "ks_pvalue": 7.71e-15,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_3",
+          "psi": 0.0128,
+          "ks_stat": 0.0173,
+          "ks_pvalue": 0.875,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_0",
+          "psi": 0.0117,
+          "ks_stat": 0.0097,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_5",
+          "psi": 0.0093,
+          "ks_stat": 0.0079,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_4",
+          "psi": 0.0081,
+          "ks_stat": 0.0143,
+          "ks_pvalue": 0.97,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_6",
+          "psi": 0.0076,
+          "ks_stat": 0.0081,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_2",
+          "psi": 0.0057,
+          "ks_stat": 0.0145,
+          "ks_pvalue": 0.965,
+          "status": "estável"
+        },
+        {
+          "feature": "education",
+          "psi": 0.0005,
+          "ks_stat": 0.0065,
+          "ks_pvalue": 1.0,
+          "status": "estável"
+        }
+      ],
+      "n_drifted": 3,
+      "n_warning": 11,
+      "drift_share": 0.1429,
+      "max_psi": 0.3458,
+      "evidently_report": "evidently/drift_report_2026-09.html",
+      "evidently": {
+        "psi": {
+          "limit_bal": 0.22718233050090778,
+          "education": 0.0005057785413022928,
+          "age": 0.33671325029959015,
+          "pay_0": 0.0116923179051255,
+          "pay_2": 0.005742853070151632,
+          "pay_3": 0.012797468998600969,
+          "pay_4": 0.008138542586591463,
+          "pay_5": 0.009269200676875668,
+          "pay_6": 0.007557259776276929,
+          "bill_amt1": 0.08695270623785471,
+          "bill_amt2": 0.07790696324419867,
+          "bill_amt3": 0.0849012888522309,
+          "bill_amt4": 0.08834397284000663,
+          "bill_amt5": 0.07431586110202212,
+          "bill_amt6": 0.06854045371756638,
+          "pay_amt1": 0.01710161273955617,
+          "pay_amt2": 0.01461363096463198,
+          "pay_amt3": 0.010823095102627014,
+          "pay_amt4": 0.021525772977178854,
+          "pay_amt5": 0.013065265287051816,
+          "pay_amt6": 0.01765959980652048,
+          "prob_default": 0.318556133919975
+        },
+        "ks_pvalue": {
+          "limit_bal": 5.56390221281204e-72,
+          "age": 4.090151974569539e-73,
+          "bill_amt1": 5.245866398756739e-17,
+          "pay_amt1": 5.206143999625276e-41
+        },
+        "drifted_columns": {
+          "count": 3.0,
+          "share": 0.13636363636363635
+        },
+        "roc_auc": 0.6998678760596329
+      },
+      "performance": {
+        "auc": 0.699867876059633,
+        "gini": 0.39973575211926593,
+        "ks_score": 0.28070894419311015,
+        "precision": 0.6431818181818182,
+        "recall": 0.37783711615487314,
+        "f1": 0.4760302775441548,
+        "approval_rate": 0.78,
+        "default_rate_observed": 0.3745
+      },
+      "fairness": {
+        "sex": {
+          "approval_rate_by_group": {
+            "feminino": 0.7826,
+            "masculino": 0.7759
+          },
+          "disparate_impact": 0.9915
+        },
+        "age_band": {
+          "approval_rate_by_group": {
+            "18-25": 0.6957,
+            "26-35": 0.8492,
+            "36-50": 0.796,
+            "51+": 0.717
+          },
+          "disparate_impact": 0.8193
+        }
+      },
+      "alerts": 4,
+      "alert_kinds": [
+        "CONCEPT_DRIFT",
+        "DATA_DRIFT",
+        "DEFAULT_RATE_SHIFT",
+        "PREDICTION_DRIFT"
+      ],
+      "status": "ALERTA",
+      "total_latency_s": 4.884,
+      "throughput_rows_s": 142857.1
+    },
+    {
+      "batch": "2026-10",
+      "step": 6,
+      "stages": {
+        "ingestion": 0.016,
+        "validation": 0.056,
+        "scoring": 0.018,
+        "drift_detection": 0.327,
+        "evidently_report": 4.454,
+        "performance_monitoring": 0.031
+      },
+      "rows_received": 2000,
+      "rows_scored": 2000,
+      "feature_drift": [
+        {
+          "feature": "age",
+          "psi": 0.3936,
+          "ks_stat": 0.2881,
+          "ks_pvalue": 1.6e-84,
+          "status": "drift"
+        },
+        {
+          "feature": "prob_default",
+          "psi": 0.336,
+          "ks_stat": 0.2522,
+          "ks_pvalue": 0.0,
+          "status": "drift"
+        },
+        {
+          "feature": "limit_bal",
+          "psi": 0.3103,
+          "ks_stat": 0.2595,
+          "ks_pvalue": 1.73e-68,
+          "status": "drift"
+        },
+        {
+          "feature": "pay_amt1",
+          "psi": 0.2758,
+          "ks_stat": 0.2178,
+          "ks_pvalue": 3.24e-48,
+          "status": "drift"
+        },
+        {
+          "feature": "pay_amt2",
+          "psi": 0.1863,
+          "ks_stat": 0.2094,
+          "ks_pvalue": 1.4e-44,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt1",
+          "psi": 0.1691,
+          "ks_stat": 0.1669,
+          "ks_pvalue": 2.03e-28,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt3",
+          "psi": 0.1575,
+          "ks_stat": 0.1751,
+          "ks_pvalue": 3.1e-31,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt3",
+          "psi": 0.1538,
+          "ks_stat": 0.1486,
+          "ks_pvalue": 1.37e-22,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt2",
+          "psi": 0.1499,
+          "ks_stat": 0.1564,
+          "ks_pvalue": 5.52e-25,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt5",
+          "psi": 0.1495,
+          "ks_stat": 0.1553,
+          "ks_pvalue": 1.25e-24,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt4",
+          "psi": 0.146,
+          "ks_stat": 0.1598,
+          "ks_pvalue": 4.47e-26,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt4",
+          "psi": 0.1255,
+          "ks_stat": 0.1605,
+          "ks_pvalue": 2.72e-26,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_amt6",
+          "psi": 0.1248,
+          "ks_stat": 0.1565,
+          "ks_pvalue": 5.16e-25,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt5",
+          "psi": 0.1235,
+          "ks_stat": 0.1591,
+          "ks_pvalue": 7.63e-26,
+          "status": "atenção"
+        },
+        {
+          "feature": "bill_amt6",
+          "psi": 0.1206,
+          "ks_stat": 0.157,
+          "ks_pvalue": 3.49e-25,
+          "status": "atenção"
+        },
+        {
+          "feature": "pay_2",
+          "psi": 0.0103,
+          "ks_stat": 0.0191,
+          "ks_pvalue": 0.784,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_3",
+          "psi": 0.0101,
+          "ks_stat": 0.0288,
+          "ks_pvalue": 0.29,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_4",
+          "psi": 0.0096,
+          "ks_stat": 0.0198,
+          "ks_pvalue": 0.75,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_0",
+          "psi": 0.0091,
+          "ks_stat": 0.0152,
+          "ks_pvalue": 0.948,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_6",
+          "psi": 0.0082,
+          "ks_stat": 0.0136,
+          "ks_pvalue": 0.981,
+          "status": "estável"
+        },
+        {
+          "feature": "pay_5",
+          "psi": 0.0066,
+          "ks_stat": 0.0154,
+          "ks_pvalue": 0.945,
+          "status": "estável"
+        },
+        {
+          "feature": "education",
+          "psi": 0.001,
+          "ks_stat": 0.011,
+          "ks_pvalue": 0.999,
+          "status": "estável"
+        }
+      ],
+      "n_drifted": 3,
+      "n_warning": 11,
+      "drift_share": 0.1429,
+      "max_psi": 0.3936,
+      "evidently_report": "evidently/drift_report_2026-10.html",
+      "evidently": {
+        "psi": {
+          "limit_bal": 0.22350128316232748,
+          "education": 0.0009590185058341976,
+          "age": 0.40981364318711455,
+          "pay_0": 0.009107753272354977,
+          "pay_2": 0.01029075162319767,
+          "pay_3": 0.010080992213258307,
+          "pay_4": 0.009645319545723768,
+          "pay_5": 0.006568581136394884,
+          "pay_6": 0.008207572758596309,
+          "bill_amt1": 0.17802560532411188,
+          "bill_amt2": 0.17128380671658228,
+          "bill_amt3": 0.14372051470975963,
+          "bill_amt4": 0.14799950594952063,
+          "bill_amt5": 0.12800676507621395,
+          "bill_amt6": 0.14360595820452945,
+          "pay_amt1": 0.021581672720988477,
+          "pay_amt2": 0.010436592903879868,
+          "pay_amt3": 0.0032033996175796996,
+          "pay_amt4": 0.01877751256595969,
+          "pay_amt5": 0.011314765543305884,
+          "pay_amt6": 0.046860375309772564,
+          "prob_default": 0.3399528605741836
+        },
+        "ks_pvalue": {
+          "limit_bal": 1.7310166288345928e-68,
+          "age": 1.598217828824468e-84,
+          "bill_amt1": 2.034143303244415e-28,
+          "pay_amt1": 3.238695494315919e-48
+        },
+        "drifted_columns": {
+          "count": 3.0,
+          "share": 0.13636363636363635
+        },
+        "roc_auc": 0.6934239675156125
+      },
+      "performance": {
+        "auc": 0.6934239675156126,
+        "gini": 0.3868479350312253,
+        "ks_score": 0.26623319883837476,
+        "precision": 0.6736401673640168,
+        "recall": 0.38562874251497004,
+        "f1": 0.49047981721249045,
+        "approval_rate": 0.761,
+        "default_rate_observed": 0.4175
+      },
+      "fairness": {
+        "sex": {
+          "approval_rate_by_group": {
+            "feminino": 0.7658,
+            "masculino": 0.7535
+          },
+          "disparate_impact": 0.984
+        },
+        "age_band": {
+          "approval_rate_by_group": {
+            "18-25": 0.6858,
+            "26-35": 0.8006,
+            "36-50": 0.8137,
+            "51+": 0.7419
+          },
+          "disparate_impact": 0.8428
+        }
+      },
+      "alerts": 4,
+      "alert_kinds": [
+        "CONCEPT_DRIFT",
+        "DATA_DRIFT",
+        "DEFAULT_RATE_SHIFT",
+        "PREDICTION_DRIFT"
+      ],
+      "status": "ALERTA",
+      "total_latency_s": 4.919,
+      "throughput_rows_s": 111111.1
+    }
+  ]
+}
