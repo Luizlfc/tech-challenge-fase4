@@ -91,4 +91,6 @@ def main(path: str) -> int:
 
 
 if __name__ == "__main__":
+    import warnings
+    warnings.filterwarnings("ignore", category=FutureWarning)  # avisos internos do pandas/pandera
     sys.exit(main(sys.argv[1]))
