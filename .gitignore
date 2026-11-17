@@ -9,9 +9,12 @@ data/raw/
 data/processed/
 data/production/
 data/quarantine/
+data/predictions/
 
-# Artefatos locais pesados (recriados por `python run_pipeline.py`)
+# Artefatos locais pesados (recriados por `python main.py`)
 mlflow.db
+.env.*
+!.env.example
 mlruns/
 mlartifacts/
 models/*.json
