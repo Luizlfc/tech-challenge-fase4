@@ -72,6 +72,28 @@ class CreditContract(pa.DataFrameModel):
 assert set(PAY_STATUS + BILL_AMT + PAY_AMT) <= set(CreditContract.to_schema().columns)
 
 
+def rule_id(column: str | None, check: str) -> str:
+    """Mapeia uma falha do Pandera (coluna, check) para o identificador da regra R1..R9."""
+    col = column or ""
+    if check in ("column_in_schema", "column_in_dataframe", "linhas duplicadas") or col.startswith("CreditContract"):
+        return "R9" if check == "lote vazio" else "R8"
+    if col == "client_hash":
+        return "R1"
+    if col == "limit_bal":
+        return "R2"
+    if col == "age":
+        return "R3"
+    if col in ("education", "sex", "marriage"):
+        return "R4"
+    if col.startswith("pay_") and not col.startswith("pay_amt"):
+        return "R5"
+    if col.startswith(("bill_amt", "pay_amt")):
+        return "R6"
+    if col == "default":
+        return "R7"
+    return "R8"
+
+
 RULES = {
     "R1": "client_hash obrigatório e único",
     "R2": "limit_bal não nulo e em (0, 1.000.000]",

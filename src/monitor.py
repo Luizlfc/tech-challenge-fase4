@@ -24,16 +24,18 @@ from evidently.metrics import ValueDrift
 from evidently.presets import ClassificationPreset, DataDriftPreset
 from xgboost import XGBClassifier
 
+from src import tracking
 from src.config import (APPROVAL_SHIFT_ALERT, AUC_DROP_ALERT, CATEGORICAL_FEATURES, DISPARATE_IMPACT_MIN,
-                        DRIFT_SHARE_ALERT, FEATURES, KS_PVALUE, MLFLOW_EXPERIMENT_MONITOR, MLFLOW_TRACKING_URI,
-                        MODEL_META_PATH, MODEL_PATH, NUMERICAL_FEATURES, PRODUCTION_DIR, PSI_CRITICAL, PSI_WARNING,
+                        DRIFT_SHARE_ALERT, FEATURES, ID_COL, KS_PVALUE, MLFLOW_EXPERIMENT_MONITOR, MODEL_META_PATH,
+                        MODEL_PATH, NUMERICAL_FEATURES, PREDICTIONS_DIR, PRODUCTION_DIR, PSI_CRITICAL, PSI_WARNING,
                         REFERENCE_PATH, REPORTS_DIR, TARGET)
-from src.logging_utils import log_event, raise_alert, timed_stage
+from src.logging_utils import RUN_ID, log_event, raise_alert, timed_stage
 from src.metrics import classification_metrics, fairness_report, ks_test, psi
 from src.train import split_reference
 from src.validate import validate_batch
 
 EVIDENTLY_DIR = REPORTS_DIR / "evidently"
+DRIFT_KINDS = {"DATA_DRIFT", "DATASET_DRIFT", "PREDICTION_DRIFT", "CONCEPT_DRIFT"}
 KS_FEATURES = ["limit_bal", "age", "bill_amt1", "pay_amt1"]  # KS explícito no Evidently (variáveis-chave)
 
 
@@ -152,16 +154,29 @@ def process_batch(path: Path, model, meta: dict, ref: pd.DataFrame, step: int) -
         res = validate_batch(df, batch)
         info["status"] = "success" if res.passed else "blocked"
     rec["stages"]["validation"] = info["latency_s"]
+    rec["validation_passed"] = res.passed
+    rec["violations_by_rule"] = res.cases_by_rule()
     if not res.passed:
         rec.update(status="BLOQUEADO", rows_scored=0, violations=res.failures, alerts=1,
+                   alert_kinds=["DATA_CONTRACT_VIOLATION"], alerts_by_kind={"DATA_CONTRACT_VIOLATION": 1},
                    total_latency_s=round(time.perf_counter() - t0, 3))
         return rec
 
     with timed_stage("scoring", batch=batch) as info:
         cur = score(model, res.data, meta["threshold"])
+        # Predições persistidas localmente (pseudonimizadas; não vão para o Git nem para a nuvem)
+        PREDICTIONS_DIR.mkdir(parents=True, exist_ok=True)
+        cur[[ID_COL, "prob_default", "prediction", "approved"]].assign(
+            model_version=meta["model_version"], batch=batch).to_csv(PREDICTIONS_DIR / f"{batch}.csv", index=False)
         info["rows"] = len(cur)
     rec["stages"]["scoring"] = info["latency_s"]
     rec["rows_scored"] = len(cur)
+    rec["predictions_summary"] = {
+        "approval_rate": round(float(cur["approved"].mean()), 4),
+        "score_mean": round(float(cur["prob_default"].mean()), 4),
+        "score_quantiles": {f"p{int(q * 100)}": round(float(cur["prob_default"].quantile(q)), 4)
+                            for q in (0.1, 0.25, 0.5, 0.75, 0.9)},
+    }
 
     with timed_stage("drift_detection", batch=batch) as info:
         rec["feature_drift"] = feature_drift_table(ref, cur)
@@ -188,6 +203,8 @@ def process_batch(path: Path, model, meta: dict, ref: pd.DataFrame, step: int) -
     alerts = evaluate_alerts(batch, rec, meta)
     rec["alerts"] = len(alerts)
     rec["alert_kinds"] = sorted({a["kind"] for a in alerts})
+    rec["alerts_by_kind"] = {k: sum(a["kind"] == k for a in alerts) for k in rec["alert_kinds"]}
+    rec["alerts_critical"] = sum(a["severity"] == "CRITICAL" for a in alerts)
     rec["status"] = "ALERTA" if any(a["severity"] == "CRITICAL" for a in alerts) else (
         "ATENÇÃO" if alerts else "SAUDÁVEL")
     rec["total_latency_s"] = round(time.perf_counter() - t0, 3)
@@ -195,42 +212,92 @@ def process_batch(path: Path, model, meta: dict, ref: pd.DataFrame, step: int) -
     return rec
 
 
+def batch_metrics(r: dict) -> dict:
+    """Todas as métricas de um lote, prontas para o MLflow (nomes estáveis para comparar execuções)."""
+    ok = r["status"] != "BLOQUEADO"
+    kinds = r.get("alerts_by_kind", {})
+    m = {
+        # pipeline: status, volume, latência
+        "pipeline_success": int(ok), "rows_received": r["rows_received"], "rows_scored": r["rows_scored"],
+        "latency_total_s": r["total_latency_s"],
+        **{f"latency_{stage}_s": v for stage, v in r["stages"].items()},
+        # contrato de dados: passou/falhou + casos por regra
+        "validation_passed": int(r["validation_passed"]),
+        "contract_violations_total": sum(r["violations_by_rule"].values()),
+        **{f"contract_{rule}_cases": n for rule, n in r["violations_by_rule"].items()},
+        # alertas
+        "alerts_total": r["alerts"],
+        "alerts_contract": kinds.get("DATA_CONTRACT_VIOLATION", 0),
+        "alerts_drift": sum(v for k, v in kinds.items() if k in DRIFT_KINDS),
+        "alerts_other": sum(v for k, v in kinds.items() if k not in DRIFT_KINDS | {"DATA_CONTRACT_VIOLATION"}),
+    }
+    if ok:
+        p = r["performance"]
+        m.update({
+            "auc": p["auc"], "f1": p["f1"], "precision": p["precision"], "recall": p["recall"],
+            "ks_score": p["ks_score"], "approval_rate": p["approval_rate"],
+            "default_rate_observed": p["default_rate_observed"],
+            "drift_share": r["drift_share"], "n_drifted_features": r["n_drifted"],
+            "n_warning_features": r["n_warning"], "max_psi": r["max_psi"],
+            "throughput_rows_s": r["throughput_rows_s"], "alerts_critical": r["alerts_critical"],
+            "evidently_drifted_columns": float(r["evidently"].get("drifted_columns", {}).get("count", 0)),
+        })
+        for f in r["feature_drift"]:
+            name = f["feature"]
+            m.update({f"psi_{name}": f["psi"], f"ks_stat_{name}": f["ks_stat"],
+                      f"ks_pvalue_{name}": f["ks_pvalue"], f"drift_flag_{name}": int(f["status"] == "drift")})
+    return m
+
+
 def log_to_mlflow(records: list[dict], meta: dict) -> str:
-    mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-    mlflow.set_experiment(MLFLOW_EXPERIMENT_MONITOR)
+    uri = tracking.setup(MLFLOW_EXPERIMENT_MONITOR)
     with mlflow.start_run(run_name="monitoramento-producao") as parent:
-        mlflow.set_tags({"model_version": meta["model_version"], "model_run_id": meta["mlflow_run_id"]})
-        mlflow.log_params({"threshold": meta["threshold"], "psi_critical": PSI_CRITICAL,
-                           "auc_drop_alert": AUC_DROP_ALERT, "n_batches": len(records)})
+        mlflow.set_tags({"model_version": meta["model_version"], "model_run_id": meta["mlflow_run_id"],
+                         "tracking_backend": tracking.backend_name(uri), "pipeline_run_id": RUN_ID})
+        mlflow.log_params({"threshold": meta["threshold"], "psi_warning": PSI_WARNING, "psi_critical": PSI_CRITICAL,
+                           "ks_pvalue": KS_PVALUE, "auc_drop_alert": AUC_DROP_ALERT,
+                           "drift_share_alert": DRIFT_SHARE_ALERT, "n_batches": len(records)})
         for r in records:
-            ok = r["status"] != "BLOQUEADO"
-            common = {"pipeline_success": int(ok), "rows_received": r["rows_received"],
-                      "rows_scored": r["rows_scored"], "latency_total_s": r["total_latency_s"], "alerts": r["alerts"]}
-            if not ok:
-                common["contract_violations"] = len(r["violations"])
-            perf = {}
-            if ok:
-                perf = {"auc": r["performance"]["auc"], "ks_score": r["performance"]["ks_score"],
-                        "recall": r["performance"]["recall"], "precision": r["performance"]["precision"],
-                        "approval_rate": r["performance"]["approval_rate"],
-                        "default_rate_observed": r["performance"]["default_rate_observed"],
-                        "drift_share": r["drift_share"], "n_drifted_features": r["n_drifted"],
-                        "max_psi": r["max_psi"], "throughput_rows_s": r["throughput_rows_s"],
-                        **{f"psi_{f['feature']}": f["psi"] for f in r["feature_drift"]}}
-            if ok:  # séries temporais no run pai (gráficos por step no MLflow)
-                mlflow.log_metrics({k: v for k, v in {**common, **perf}.items()}, step=r["step"])
+            m = batch_metrics(r)
+            # séries temporais no run pai: um step por lote (gráficos de evolução no MLflow/Azure ML)
+            mlflow.log_metrics(m, step=r["step"])
             with mlflow.start_run(run_name=f"lote-{r['batch']}", nested=True):
-                mlflow.set_tags({"batch": r["batch"], "status": r["status"]})
-                mlflow.log_metrics({**common, **perf})
-                if ok:
+                mlflow.set_tags({"batch": r["batch"], "status": r["status"], "pipeline_run_id": RUN_ID,
+                                 "alert_kinds": ",".join(r.get("alert_kinds", [])) or "nenhum"})
+                mlflow.log_metrics(m)
+                if r["status"] != "BLOQUEADO":
                     mlflow.log_artifact(str(REPORTS_DIR / r["evidently_report"]), "evidently")
                     mlflow.log_dict(r["feature_drift"], "feature_drift.json")
+                    mlflow.log_dict(r["predictions_summary"], "predictions_summary.json")
                 else:
                     mlflow.log_dict(r["violations"], "contract_violations.json")
+        # agregados da execução inteira
+        mlflow.log_metrics({
+            "run_batches_total": len(records),
+            "run_batches_blocked": sum(r["status"] == "BLOQUEADO" for r in records),
+            "run_batches_alerting": sum(r["status"] == "ALERTA" for r in records),
+            "run_rows_scored": sum(r["rows_scored"] for r in records),
+            "run_alerts_total": sum(r["alerts"] for r in records),
+            "run_alerts_drift": sum(batch_metrics(r)["alerts_drift"] for r in records),
+            "run_alerts_contract": sum(batch_metrics(r)["alerts_contract"] for r in records),
+        })
         return parent.info.run_id
 
 
-def main() -> list[dict]:
+def log_final_artifacts(run_id: str) -> None:
+    """Anexa dashboard, resumo, análise causal e logs ao run pai (chamado ao fim do pipeline)."""
+    tracking.setup(MLFLOW_EXPERIMENT_MONITOR)
+    with mlflow.start_run(run_id=run_id):
+        for name in ("dashboard.html", "monitoring_summary.json", "causal_analysis.json", "metrics.prom"):
+            path = REPORTS_DIR / name
+            if path.exists():
+                mlflow.log_artifact(str(path), "reports")
+        for path in sorted((REPORTS_DIR / "logs").glob("*.jsonl")):
+            mlflow.log_artifact(str(path), "logs")
+        mlflow.log_artifacts(str(EVIDENTLY_DIR), "evidently")
+
+
+def main() -> tuple[list[dict], str]:
     model, meta = load_model()
     _, _, holdout = split_reference(pd.read_csv(REFERENCE_PATH))
     ref = score(model, holdout, meta["threshold"])
@@ -239,13 +306,14 @@ def main() -> list[dict]:
     batches = sorted(PRODUCTION_DIR.glob("*.csv"))
     records = [process_batch(p, model, meta, ref, step) for step, p in enumerate(batches)]
 
-    run_id = log_to_mlflow(records, meta)
-    log_event("mlflow_tracking", "success", run_id=run_id, batches=len(records))
+    with timed_stage("mlflow_tracking", backend=tracking.backend_name()) as info:
+        run_id = log_to_mlflow(records, meta)
+        info.update(run_id=run_id, batches=len(records))
     REPORTS_DIR.mkdir(parents=True, exist_ok=True)
     (REPORTS_DIR / "monitoring_summary.json").write_text(
         json.dumps({"model": {k: meta[k] for k in ("model_version", "threshold", "baseline_metrics", "baseline_fairness")},
                     "batches": records}, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
-    return records
+    return records, run_id
 
 
 if __name__ == "__main__":

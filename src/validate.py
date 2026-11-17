@@ -15,7 +15,7 @@ import pandas as pd
 import pandera.pandas as pa
 
 from src.config import QUARANTINE_DIR
-from src.contracts import CreditContract
+from src.contracts import RULES, CreditContract, rule_id
 from src.logging_utils import log_event, raise_alert
 
 
@@ -31,14 +31,23 @@ class ValidationResult:
     def n_failures(self) -> int:
         return len(self.failures)
 
+    def cases_by_rule(self) -> dict[str, int]:
+        """Nº de casos violados por regra (R1..R9), com zero para as regras respeitadas."""
+        out = {r: 0 for r in RULES}
+        for f in self.failures:
+            out[f["rule"]] += f["n_cases"]
+        return out
+
 
 def _summarize(err: pa.errors.SchemaErrors) -> list[dict]:
     fc = err.failure_cases.copy()
     fc["failure_case"] = fc["failure_case"].astype(str)
     out = []
     for (col, check), grp in fc.groupby(["column", "check"], dropna=False):
+        column = None if pd.isna(col) else str(col)
         out.append({
-            "column": None if pd.isna(col) else str(col),
+            "rule": rule_id(column, str(check)),
+            "column": column,
             "check": str(check),
             "n_cases": int(len(grp)),
             "examples": grp["failure_case"].head(3).tolist(),
@@ -76,7 +85,8 @@ def main(path: str) -> int:
         return 0
     print(f"BLOQUEADO: lote '{p.stem}' violou o contrato:")
     for f in res.failures:
-        print(f"  - {f['column'] or '<dataframe>'} | {f['check']} | {f['n_cases']} caso(s) | ex.: {f['examples']}")
+        print(f"  - {f['rule']} | {f['column'] or '<dataframe>'} | {f['check']} | {f['n_cases']} caso(s) | ex.: {f['examples']}")
+    print(f"Lote movido para a quarentena: {QUARANTINE_DIR / (p.stem + '.csv')}")
     return 1
 
 
