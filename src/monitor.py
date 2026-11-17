@@ -285,7 +285,10 @@ def log_to_mlflow(records: list[dict], meta: dict) -> str:
 
 
 def log_final_artifacts(run_id: str) -> None:
-    """Anexa dashboard, resumo, análise causal e logs ao run pai (chamado ao fim do pipeline)."""
+    """Anexa dashboard, resumo, análise causal e logs ao run pai (chamado ao fim do pipeline).
+
+    Os HTMLs do Evidently (~5 MB cada) já estão nos runs filhos de cada lote; não são
+    reenviados aqui para não duplicar armazenamento (custo no Azure ML)."""
     tracking.setup(MLFLOW_EXPERIMENT_MONITOR)
     with mlflow.start_run(run_id=run_id):
         for name in ("dashboard.html", "monitoring_summary.json", "causal_analysis.json", "metrics.prom"):
@@ -294,7 +297,6 @@ def log_final_artifacts(run_id: str) -> None:
                 mlflow.log_artifact(str(path), "reports")
         for path in sorted((REPORTS_DIR / "logs").glob("*.jsonl")):
             mlflow.log_artifact(str(path), "logs")
-        mlflow.log_artifacts(str(EVIDENTLY_DIR), "evidently")
 
 
 def main() -> tuple[list[dict], str]:
