@@ -60,6 +60,13 @@ def validate_batch(df: pd.DataFrame, batch_name: str) -> ValidationResult:
         clean = CreditContract.validate(df, lazy=True)
     except pa.errors.SchemaErrors as err:
         failures = _summarize(err)
+        for f in failures:  # check de DataFrame: o Pandera só devolve "False"; mostra as linhas repetidas
+            if f["check"] == "linhas duplicadas":
+                dup = df[df.duplicated()]
+                f["n_cases"] = int(len(dup))
+                key = "client_hash" if "client_hash" in dup else dup.columns[0]
+                f["examples"] = dup[key].astype(str).head(3).tolist()
+        failures.sort(key=lambda x: -x["n_cases"])
         QUARANTINE_DIR.mkdir(parents=True, exist_ok=True)
         df.to_csv(QUARANTINE_DIR / f"{batch_name}.csv", index=False)
         report = {"batch": batch_name, "rows": len(df), "contract": "CreditContract v1.0",

@@ -161,7 +161,7 @@ Criação do workspace, orçamento com alerta e remoção de tudo: **[docs/azure
 | `education` | isin [1,2,3,4] | 5 |
 | `pay_0` | ≤ 8 | 5 |
 | (dataset) | column_in_schema → `cpf` | 1 |
-| (dataset) | linhas duplicadas | 1 |
+| (dataset) | linhas duplicadas | 20 |
 
 Cada regra também tem um teste automatizado isolado em [tests/test_contracts.py](tests/test_contracts.py), executado na CI (GitHub Actions).
 
