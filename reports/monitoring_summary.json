@@ -36,15 +36,38 @@
       "batch": "2026-05",
       "step": 0,
       "stages": {
-        "ingestion": 0.022,
-        "validation": 0.091,
-        "scoring": 0.017,
-        "drift_detection": 0.167,
-        "evidently_report": 4.725,
-        "performance_monitoring": 0.021
+        "ingestion": 0.016,
+        "validation": 0.048,
+        "scoring": 0.019,
+        "drift_detection": 0.092,
+        "evidently_report": 4.678,
+        "performance_monitoring": 0.028
       },
       "rows_received": 2000,
+      "validation_passed": true,
+      "violations_by_rule": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0,
+        "R5": 0,
+        "R6": 0,
+        "R7": 0,
+        "R8": 0,
+        "R9": 0
+      },
       "rows_scored": 2000,
+      "predictions_summary": {
+        "approval_rate": 0.8185,
+        "score_mean": 0.2204,
+        "score_quantiles": {
+          "p10": 0.0598,
+          "p25": 0.0911,
+          "p50": 0.1425,
+          "p75": 0.27,
+          "p90": 0.5541
+        }
+      },
       "feature_drift": [
         {
           "feature": "pay_6",
@@ -273,23 +296,48 @@
       },
       "alerts": 0,
       "alert_kinds": [],
+      "alerts_by_kind": {},
+      "alerts_critical": 0,
       "status": "SAUDÁVEL",
-      "total_latency_s": 5.054,
-      "throughput_rows_s": 117647.1
+      "total_latency_s": 4.892,
+      "throughput_rows_s": 105263.2
     },
     {
       "batch": "2026-06",
       "step": 1,
       "stages": {
-        "ingestion": 0.012,
-        "validation": 0.04,
-        "scoring": 0.01,
-        "drift_detection": 0.123,
-        "evidently_report": 4.078,
-        "performance_monitoring": 0.034
+        "ingestion": 0.028,
+        "validation": 0.06,
+        "scoring": 0.041,
+        "drift_detection": 0.203,
+        "evidently_report": 4.211,
+        "performance_monitoring": 0.041
       },
       "rows_received": 2000,
+      "validation_passed": true,
+      "violations_by_rule": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0,
+        "R5": 0,
+        "R6": 0,
+        "R7": 0,
+        "R8": 0,
+        "R9": 0
+      },
       "rows_scored": 2000,
+      "predictions_summary": {
+        "approval_rate": 0.8155,
+        "score_mean": 0.2308,
+        "score_quantiles": {
+          "p10": 0.065,
+          "p25": 0.0998,
+          "p50": 0.1557,
+          "p75": 0.278,
+          "p90": 0.5791
+        }
+      },
       "feature_drift": [
         {
           "feature": "pay_amt5",
@@ -518,23 +566,48 @@
       },
       "alerts": 0,
       "alert_kinds": [],
+      "alerts_by_kind": {},
+      "alerts_critical": 0,
       "status": "SAUDÁVEL",
-      "total_latency_s": 4.307,
-      "throughput_rows_s": 200000.0
+      "total_latency_s": 4.604,
+      "throughput_rows_s": 48780.5
     },
     {
       "batch": "2026-07",
       "step": 2,
       "stages": {
-        "ingestion": 0.017,
-        "validation": 0.082,
-        "scoring": 0.019,
-        "drift_detection": 0.262,
-        "evidently_report": 3.987,
-        "performance_monitoring": 0.032
+        "ingestion": 0.021,
+        "validation": 0.077,
+        "scoring": 0.021,
+        "drift_detection": 0.155,
+        "evidently_report": 4.028,
+        "performance_monitoring": 0.029
       },
       "rows_received": 2000,
+      "validation_passed": true,
+      "violations_by_rule": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0,
+        "R5": 0,
+        "R6": 0,
+        "R7": 0,
+        "R8": 0,
+        "R9": 0
+      },
       "rows_scored": 2000,
+      "predictions_summary": {
+        "approval_rate": 0.7845,
+        "score_mean": 0.25,
+        "score_quantiles": {
+          "p10": 0.0679,
+          "p25": 0.1127,
+          "p50": 0.1755,
+          "p75": 0.2994,
+          "p90": 0.6262
+        }
+      },
       "feature_drift": [
         {
           "feature": "pay_amt1",
@@ -765,23 +838,50 @@
       "alert_kinds": [
         "DEFAULT_RATE_SHIFT"
       ],
+      "alerts_by_kind": {
+        "DEFAULT_RATE_SHIFT": 1
+      },
+      "alerts_critical": 0,
       "status": "ATENÇÃO",
-      "total_latency_s": 4.412,
-      "throughput_rows_s": 105263.2
+      "total_latency_s": 4.345,
+      "throughput_rows_s": 95238.1
     },
     {
       "batch": "2026-08",
       "step": 3,
       "stages": {
-        "ingestion": 0.015,
-        "validation": 0.06,
-        "scoring": 0.017,
-        "drift_detection": 0.196,
-        "evidently_report": 4.67,
-        "performance_monitoring": 0.029
+        "ingestion": 0.016,
+        "validation": 0.053,
+        "scoring": 0.016,
+        "drift_detection": 0.23,
+        "evidently_report": 4.445,
+        "performance_monitoring": 0.027
       },
       "rows_received": 2000,
+      "validation_passed": true,
+      "violations_by_rule": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0,
+        "R5": 0,
+        "R6": 0,
+        "R7": 0,
+        "R8": 0,
+        "R9": 0
+      },
       "rows_scored": 2000,
+      "predictions_summary": {
+        "approval_rate": 0.7765,
+        "score_mean": 0.2581,
+        "score_quantiles": {
+          "p10": 0.0845,
+          "p25": 0.1265,
+          "p50": 0.1909,
+          "p75": 0.3242,
+          "p90": 0.5724
+        }
+      },
       "feature_drift": [
         {
           "feature": "age",
@@ -1015,22 +1115,42 @@
         "DEFAULT_RATE_SHIFT",
         "PREDICTION_DRIFT"
       ],
+      "alerts_by_kind": {
+        "CONCEPT_DRIFT": 1,
+        "DATA_DRIFT": 1,
+        "DEFAULT_RATE_SHIFT": 1,
+        "PREDICTION_DRIFT": 1
+      },
+      "alerts_critical": 2,
       "status": "ALERTA",
-      "total_latency_s": 5.006,
-      "throughput_rows_s": 117647.1
+      "total_latency_s": 4.809,
+      "throughput_rows_s": 125000.0
     },
     {
       "batch": "2026-08_sistema_legado",
       "step": 4,
       "stages": {
-        "ingestion": 0.008,
-        "validation": 0.16
+        "ingestion": 0.007,
+        "validation": 0.168
       },
       "rows_received": 520,
+      "validation_passed": false,
+      "violations_by_rule": {
+        "R1": 40,
+        "R2": 45,
+        "R3": 15,
+        "R4": 5,
+        "R5": 5,
+        "R6": 10,
+        "R7": 0,
+        "R8": 2,
+        "R9": 0
+      },
       "status": "BLOQUEADO",
       "rows_scored": 0,
       "violations": [
         {
+          "rule": "R2",
           "column": "limit_bal",
           "check": "not_nullable",
           "n_cases": 45,
@@ -1041,6 +1161,7 @@
           ]
         },
         {
+          "rule": "R1",
           "column": "client_hash",
           "check": "field_uniqueness",
           "n_cases": 40,
@@ -1051,6 +1172,7 @@
           ]
         },
         {
+          "rule": "R3",
           "column": "age",
           "check": "greater_than_or_equal_to(18)",
           "n_cases": 11,
@@ -1061,6 +1183,7 @@
           ]
         },
         {
+          "rule": "R6",
           "column": "pay_amt1",
           "check": "greater_than_or_equal_to(0)",
           "n_cases": 10,
@@ -1071,6 +1194,7 @@
           ]
         },
         {
+          "rule": "R4",
           "column": "education",
           "check": "isin([1, 2, 3, 4])",
           "n_cases": 5,
@@ -1081,6 +1205,7 @@
           ]
         },
         {
+          "rule": "R5",
           "column": "pay_0",
           "check": "less_than_or_equal_to(8)",
           "n_cases": 5,
@@ -1091,6 +1216,7 @@
           ]
         },
         {
+          "rule": "R3",
           "column": "age",
           "check": "less_than_or_equal_to(100)",
           "n_cases": 4,
@@ -1101,6 +1227,7 @@
           ]
         },
         {
+          "rule": "R8",
           "column": "CreditContract v1.0",
           "check": "column_in_schema",
           "n_cases": 1,
@@ -1109,6 +1236,7 @@
           ]
         },
         {
+          "rule": "R8",
           "column": "CreditContract v1.0",
           "check": "linhas duplicadas",
           "n_cases": 1,
@@ -1118,21 +1246,50 @@
         }
       ],
       "alerts": 1,
-      "total_latency_s": 0.17
+      "alert_kinds": [
+        "DATA_CONTRACT_VIOLATION"
+      ],
+      "alerts_by_kind": {
+        "DATA_CONTRACT_VIOLATION": 1
+      },
+      "total_latency_s": 0.178
     },
     {
       "batch": "2026-09",
       "step": 5,
       "stages": {
-        "ingestion": 0.014,
-        "validation": 0.056,
-        "scoring": 0.014,
-        "drift_detection": 0.32,
-        "evidently_report": 4.437,
+        "ingestion": 0.016,
+        "validation": 0.054,
+        "scoring": 0.035,
+        "drift_detection": 0.366,
+        "evidently_report": 4.469,
         "performance_monitoring": 0.029
       },
       "rows_received": 2000,
+      "validation_passed": true,
+      "violations_by_rule": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0,
+        "R5": 0,
+        "R6": 0,
+        "R7": 0,
+        "R8": 0,
+        "R9": 0
+      },
       "rows_scored": 2000,
+      "predictions_summary": {
+        "approval_rate": 0.78,
+        "score_mean": 0.2695,
+        "score_quantiles": {
+          "p10": 0.0872,
+          "p25": 0.1378,
+          "p50": 0.2062,
+          "p75": 0.3224,
+          "p90": 0.5891
+        }
+      },
       "feature_drift": [
         {
           "feature": "age",
@@ -1366,9 +1523,16 @@
         "DEFAULT_RATE_SHIFT",
         "PREDICTION_DRIFT"
       ],
+      "alerts_by_kind": {
+        "CONCEPT_DRIFT": 1,
+        "DATA_DRIFT": 1,
+        "DEFAULT_RATE_SHIFT": 1,
+        "PREDICTION_DRIFT": 1
+      },
+      "alerts_critical": 2,
       "status": "ALERTA",
-      "total_latency_s": 4.884,
-      "throughput_rows_s": 142857.1
+      "total_latency_s": 4.995,
+      "throughput_rows_s": 57142.9
     },
     {
       "batch": "2026-10",
@@ -1376,13 +1540,36 @@
       "stages": {
         "ingestion": 0.016,
         "validation": 0.056,
-        "scoring": 0.018,
-        "drift_detection": 0.327,
-        "evidently_report": 4.454,
+        "scoring": 0.043,
+        "drift_detection": 0.414,
+        "evidently_report": 4.259,
         "performance_monitoring": 0.031
       },
       "rows_received": 2000,
+      "validation_passed": true,
+      "violations_by_rule": {
+        "R1": 0,
+        "R2": 0,
+        "R3": 0,
+        "R4": 0,
+        "R5": 0,
+        "R6": 0,
+        "R7": 0,
+        "R8": 0,
+        "R9": 0
+      },
       "rows_scored": 2000,
+      "predictions_summary": {
+        "approval_rate": 0.761,
+        "score_mean": 0.2793,
+        "score_quantiles": {
+          "p10": 0.091,
+          "p25": 0.1418,
+          "p50": 0.2122,
+          "p75": 0.3412,
+          "p90": 0.6059
+        }
+      },
       "feature_drift": [
         {
           "feature": "age",
@@ -1616,9 +1803,16 @@
         "DEFAULT_RATE_SHIFT",
         "PREDICTION_DRIFT"
       ],
+      "alerts_by_kind": {
+        "CONCEPT_DRIFT": 1,
+        "DATA_DRIFT": 1,
+        "DEFAULT_RATE_SHIFT": 1,
+        "PREDICTION_DRIFT": 1
+      },
+      "alerts_critical": 2,
       "status": "ALERTA",
-      "total_latency_s": 4.919,
-      "throughput_rows_s": 111111.1
+      "total_latency_s": 4.845,
+      "throughput_rows_s": 46511.6
     }
   ]
 }
