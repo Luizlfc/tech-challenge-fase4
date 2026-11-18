@@ -13,7 +13,7 @@ Uma fintech tem um modelo de Credit Scoring em produção e suspeita de **degrad
 | Dashboard de observabilidade, logs, MLflow e Prometheus | [reports/dashboard.html](reports/dashboard.html), [reports/logs/](reports/logs/), [reports/metrics.prom](reports/metrics.prom) |
 | Análise causal + prescrição | [src/causal_analysis.py](src/causal_analysis.py), [reports/causal_analysis.json](reports/causal_analysis.json) |
 | Governança e LGPD | [seção 7 deste README](#7-governança-e-lgpd-etapa-4) |
-| Vídeo STAR | [youtu.be/vFAA_kybjks](https://youtu.be/vFAA_kybjks) · [seção 9](#9-vídeo-star) · roteiro em [docs/roteiro_video.md](docs/roteiro_video.md) |
+| Vídeo STAR | [youtu.be/vfAA_kybjks](https://youtu.be/vfAA_kybjks) · [seção 9](#9-vídeo-star) · roteiro em [docs/roteiro_video.md](docs/roteiro_video.md) |
 | Tracking no Azure ML (opcional) | [src/tracking.py](src/tracking.py), [docs/azure_setup.md](docs/azure_setup.md) |
 
 ---
@@ -401,7 +401,7 @@ Nenhum **dado pessoal sensível** (art. 5º, II: origem racial, saúde, biometri
 
 ## 9. Vídeo STAR
 
-🎥 **Link do vídeo:** https://youtu.be/vFAA_kybjks
+🎥 **Link do vídeo:** https://youtu.be/vfAA_kybjks
 
 Roteiro de 5 minutos (Situation, Task, Action, Result) com falas e o que mostrar na tela: [docs/roteiro_video.md](docs/roteiro_video.md).
 
