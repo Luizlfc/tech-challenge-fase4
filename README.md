@@ -2,6 +2,8 @@
 
 > Observabilidade contínua, detecção de drift, qualidade de dados e governança (LGPD) para um modelo de crédito em produção.
 
+**Grupo:** Ahmed Mohamad Bakri · Leandro Feitosa da Silva · Luiz Fernando Carvalho · **Vídeo STAR:** https://youtu.be/vfAA_kybjks
+
 Uma fintech tem um modelo de Credit Scoring em produção e suspeita de **degradação silenciosa** após mudanças na economia (inflação, novos perfis de clientes). Este repositório constrói a camada que intercepta dados ruins, detecta o drift, explica a causa e documenta a governança.
 
 | Entregável | Onde está |
